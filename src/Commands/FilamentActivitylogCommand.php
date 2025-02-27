@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Swis\FilamentActivitylog\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class FilamentActivitylogCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'filament-activitylog';
 
     public $description = 'My command';
 
