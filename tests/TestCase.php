@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\FilamentActivitylog\Tests;
+namespace Swis\Filament\Activitylog\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
-use Swis\FilamentActivitylog\FilamentActivitylogServiceProvider;
+use Swis\Filament\Activitylog\FilamentActivitylogServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -24,8 +24,10 @@ class TestCase extends Orchestra
     {
         parent::setUp();
 
+        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Swis\\FilamentActivitylog\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
+            fn (string $modelName) => 'Swis\\Filament\\Activitylog\\Tests\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
         );
     }
 
@@ -52,9 +54,6 @@ class TestCase extends Orchestra
     {
         config()->set('database.default', 'testing');
 
-        /*
-        $migration = include __DIR__.'/../database/migrations/create_filament-activitylog_table.php.stub';
-        $migration->up();
-        */
+        config()->set('app.locale', 'en');
     }
 }

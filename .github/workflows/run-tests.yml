@@ -1,4 +1,4 @@
-name: run-tests
+name: Tests
 
 on:
   push:
@@ -13,13 +13,23 @@ jobs:
       fail-fast: true
       matrix:
         os: [ubuntu-latest, windows-latest]
-        php: [8.2, 8.1]
-        laravel: [10.*]
+        php: [8.2, 8.3, 8.4]
+        laravel: [11.*, 12.*]
         stability: [prefer-lowest, prefer-stable]
+        exclude:
+          - php: 8.2
+            laravel: 12.*
         include:
-          - laravel: 10.*
-            testbench: 8.*
+          - laravel: 11.*
+            testbench: 9.*
+            phpstan: 1.*
+            larastan: 2.*
             carbon: 2.*
+          - laravel: 12.*
+            testbench: 10.*
+            phpstan: 2.*
+            larastan: 3.*
+            carbon: 3.*
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
@@ -41,7 +51,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" "nesbot/carbon:${{ matrix.carbon }}" --no-interaction --no-update
+          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" "nesbot/carbon:${{ matrix.carbon }}" "nunomaduro/larastan:${{ matrix.larastan }}" "phpstan/phpstan:${{ matrix.phpstan }}" "phpstan/phpstan-deprecation-rules:${{ matrix.phpstan }}" "phpstan/phpstan-phpunit:${{ matrix.phpstan }}" --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
       - name: List Installed Dependencies
