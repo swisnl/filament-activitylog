@@ -5,8 +5,9 @@ namespace Swis\Filament\Activitylog\Tables;
 use Closure;
 use Filament\Tables\Columns\Layout\Component;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\View\ComponentAttributeBag;
-use Spatie\Activitylog\Models\Activity;
+use Spatie\Activitylog\Contracts\Activity;
 
 class EntryContent extends Component
 {
@@ -37,8 +38,8 @@ class EntryContent extends Component
 
     public static function mapEventToView(string $event, string $view, bool $prepend = false): void
     {
-        $resolver = function (Activity $record) use ($event, $view) {
-            if ($record->event === $event) {
+        $resolver = function (Activity & Model $record) use ($event, $view) {
+            if (isset($record->event) && $record->event === $event) {
                 return $view;
             }
 
@@ -52,11 +53,13 @@ class EntryContent extends Component
         }
     }
 
-    public static function resolveView(Activity $record): string
+    public static function resolveView(?Model $record): string
     {
-        foreach (static::$viewResolvers as $resolver) {
-            if ($view = $resolver($record)) {
-                return $view;
+        if ($record instanceof Activity) {
+            foreach (static::$viewResolvers as $resolver) {
+                if ($view = $resolver($record)) {
+                    return $view;
+                }
             }
         }
 
