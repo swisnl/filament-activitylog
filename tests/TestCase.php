@@ -27,7 +27,12 @@ class TestCase extends Orchestra
         $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Swis\\Filament\\Activitylog\\Tests\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
+            function (string $modelName): string {
+                /** @var class-string<\Illuminate\Database\Eloquent\Factories\Factory<\Illuminate\Database\Eloquent\Model>> $factory */
+                $factory = 'Swis\\Filament\\Activitylog\\Tests\\Database\\Factories\\' . class_basename($modelName) . 'Factory';
+
+                return $factory;
+            }
         );
     }
 

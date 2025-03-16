@@ -417,7 +417,11 @@ class AttributeTableBuilder
 
         // Formatters for casts and relations
         $this->registerValueFormatter(function (mixed $value, string $key, string $recordClass) {
-            $casts = (new $recordClass)->getCasts();
+            $instance = new $recordClass;
+            if (! $instance instanceof Model) {
+                return null;
+            }
+            $casts = $instance->getCasts();
 
             if (
                 array_key_exists($key, $casts) &&
@@ -426,7 +430,7 @@ class AttributeTableBuilder
                 if ($value instanceof DateTimeInterface) {
                     return CarbonImmutable::instance($value)->format(Table::$defaultDateDisplayFormat);
                 }
-                if (is_scalar($value)) {
+                if (is_string($value) || is_int($value) || is_float($value)) {
                     return CarbonImmutable::parse($value)->format(Table::$defaultDateDisplayFormat);
                 }
             }
@@ -435,7 +439,11 @@ class AttributeTableBuilder
         }, -25);
 
         $this->registerValueFormatter(function (mixed $value, string $key, string $recordClass) {
-            $casts = (new $recordClass)->getCasts();
+            $instance = new $recordClass;
+            if (! $instance instanceof Model) {
+                return null;
+            }
+            $casts = $instance->getCasts();
 
             if (
                 array_key_exists($key, $casts) &&
@@ -444,7 +452,7 @@ class AttributeTableBuilder
                 if ($value instanceof DateTimeInterface) {
                     return CarbonImmutable::instance($value)->format(Table::$defaultDateTimeDisplayFormat);
                 }
-                if (is_scalar($value)) {
+                if (is_string($value) || is_int($value) || is_float($value)) {
                     return CarbonImmutable::parse($value)->format(Table::$defaultDateTimeDisplayFormat);
                 }
             }
