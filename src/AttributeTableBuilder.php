@@ -109,6 +109,8 @@ class AttributeTableBuilder
 
     /**
      * Execute a value formatter.
+     *
+     * @param  array<string, mixed>  $attributes
      */
     public function executeValueFormatter(Closure | AttributeTableValuesFormatter $valueFormatter, mixed $value, string $key, array $attributes, string $recordClass): null | Stringable | string
     {
@@ -130,6 +132,8 @@ class AttributeTableBuilder
      *
      * This method calls the registered value formatters in order of priority until a formatter returns a value. If no
      * formatter returns a value, the default unknown value is returned.
+     *
+     * @param  array<string, mixed>  $attributes
      */
     public function formatValue(mixed $value, string $key, array $attributes, string $recordClass): Stringable | string
     {
@@ -229,6 +233,10 @@ class AttributeTableBuilder
 
     /**
      * Build a collection of attributes for both new and old attributes.
+     *
+     * @param  array<string, mixed>  $newAttributes
+     * @param  ?array<string, mixed>  $oldAttributes
+     * @return \Illuminate\Support\Collection<string, Attribute>
      */
     public function buildAttributes(string $recordClass, array $newAttributes, ?array $oldAttributes = null): Collection
     {
@@ -330,6 +338,8 @@ class AttributeTableBuilder
      * The return value is an array where the keys are the foreign key names and the values are the relation method
      * names. MorphTo relations are also considered BelongsTo relations. The relations are cached for performance
      * reasons.
+     *
+     * @return array<string, string>
      */
     public function getBelongsToRelationsForModel(string $modelClass): array
     {
@@ -347,6 +357,8 @@ class AttributeTableBuilder
      *
      * The return value is an array where the keys are the morph type column names and the values are the relation
      * method names. The relations are cached for performance reasons.
+     *
+     * @return array<string, string>
      */
     public function getMorphToRelationsForModel(string $modelClass): array
     {

@@ -11,6 +11,9 @@ use Spatie\Activitylog\Contracts\Activity;
 
 class EntryContent extends Component
 {
+    /**
+     * @var \Closure[]
+     */
     public static array $viewResolvers = [];
 
     public static function make(): static

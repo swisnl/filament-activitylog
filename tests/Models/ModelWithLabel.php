@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ModelWithLabel extends Model implements HasLabel
 {
+    /** @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Swis\Filament\Activitylog\Tests\Database\Factories\ModelWithLabelFactory> */
     use HasFactory;
 
     protected $table = 'models_with_label';

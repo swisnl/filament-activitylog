@@ -14,6 +14,7 @@ use Swis\Filament\Activitylog\Contracts\HasAttributeTableValue;
  */
 class ModelWithValue extends Model implements HasAttributeTableValue
 {
+    /** @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Swis\Filament\Activitylog\Tests\Database\Factories\ModelWithValueFactory> */
     use HasFactory;
 
     protected $table = 'models_with_value';
