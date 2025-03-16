@@ -118,13 +118,16 @@ class AttributeTableBuilder
             return $valueFormatter->formatAttributeTableValue($this, $value, $key, $attributes, $recordClass);
         }
 
-        return app()->call($valueFormatter, [
+        /** @var null | Stringable | string $result */
+        $result = app()->call($valueFormatter, [
             'builder' => $this,
             'value' => $value,
             'key' => $key,
             'attributes' => $attributes,
             'recordClass' => $recordClass,
         ]);
+
+        return $result;
     }
 
     /**
@@ -207,10 +210,13 @@ class AttributeTableBuilder
             return $labelProvider->getAttributeTableLabel($key, $recordClass);
         }
 
-        return app()->call($labelProvider, [
+        /** @var ?string $result */
+        $result = app()->call($labelProvider, [
             'key' => $key,
             'recordClass' => $recordClass,
         ]);
+
+        return $result;
     }
 
     /**

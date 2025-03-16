@@ -185,5 +185,5 @@ it('skips attributes', function () {
 
     expect($attributes)->toBeInstanceOf(\Illuminate\Support\Collection::class)
         ->and($attributes->count())->toBe(1)
-        ->and($attributes->first()->getKey())->toBe('property');
+        ->and($attributes->first()?->getKey())->toBe('property');
 });

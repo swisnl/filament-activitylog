@@ -7,13 +7,13 @@ use Illuminate\Support\Facades\Facade;
 use Swis\Filament\Activitylog\AttributeTableBuilder;
 
 /**
- * @method static \Illuminate\Support\Collection buildAttributes(string $recordClass, array $newAttributes, array $oldAttributes = null)
+ * @method static \Illuminate\Support\Collection<string, \Swis\Filament\Activitylog\Attribute> buildAttributes(string $recordClass, array $newAttributes, array $oldAttributes = null)
  * @method static null | \Stringable | string executeValueFormatter(\Closure | \Swis\Filament\Activitylog\Contracts\AttributeTableValuesFormatter $formatter, mixed $value, string $key, array $attributes, string $recordClass)
  * @method static null | \Stringable | string executeLabelProvider(\Closure | \Swis\Filament\Activitylog\Contracts\AttributeTableLabelProvider $provider, string $key, string $recordClass)
  * @method static \Stringable | string formatValue(mixed $value, string $key, array $attributes, string $recordClass)
  * @method static string getLabel(string $recordClass, string $key)
- * @method static array getBelongsToRelationsForModel(string $modelClass)
- * @method static array getMorphToRelationsForModel(string $modelClass)
+ * @method static array<string, string> getBelongsToRelationsForModel(string $modelClass)
+ * @method static array<string, string> getMorphToRelationsForModel(string $modelClass)
  * @method static \Closure[] getSortedValueFormatters()
  * @method static \Closure[] getSortedLabelProviders()
  */
