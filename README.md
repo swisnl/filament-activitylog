@@ -29,9 +29,6 @@ activity. The actions show a modal with the activity log entries for the record 
 By default, the actions use the `viewActivitylog` and `commentActivitylog` abilities on the model policy. If the policy
 doesn't exist or the method is not defined in the policy, the action is shown to everyone.
 
-Both actions have methods to enable or disable the comment form. The comment form is enabled by default. You can disable
-the comment form by calling the `disableComments` method on the action.
-
 ```php
 <?php
 
@@ -53,6 +50,10 @@ class MyModelPolicy
     }
 }
 ```
+
+Both actions also have methods to enable or disable the comment form. The comment form is enabled by default. You can 
+disable the comment form by calling the `disableComments` method on the action. If the comment form is disabled, the 
+policy is ignored for the comment form.
 
 ### Tables
 
@@ -84,8 +85,8 @@ class MyResource extends Resource
 
 ### Pages
 
-For pages, use the `Swis\Filament\ActivityLog\Filament\Actions\ActivitylogAction`. The action can be added to the header
-actions of the page. The example shows how to add the action to the `EditRecord` page, but the same logic applies to the
+For pages, use the `Swis\Filament\ActivityLog\Actions\ActivitylogAction`. The action can be added to the header actions
+of the page. The example shows how to add the action to the `EditRecord` page, but the same logic applies to the
 `ViewRecord` page, or other record pages.
 
 ```php
@@ -95,7 +96,7 @@ namespace App\Filament\Resources\MyResource\Pages;
 
 use App\Filament\Resources\MyResource;
 use Filament\Resources\Pages\EditRecord;
-use Swis\Filament\ActivityLog\Filament\Actions\ActivitylogAction;
+use Swis\Filament\ActivityLog\Actions\ActivitylogAction;
 
 class EditContract extends EditRecord
 {
@@ -113,7 +114,7 @@ class EditContract extends EditRecord
 
 ## Customizing the activity log entries
 
-The package shows an row in the activity log for each activity log entry. Depending on the type of activity log entry,
+The package shows a row in the activity log for each activity log entry. Depending on the type of activity log entry,
 the row is shown in a different way. The package provides a way to customize the display of the activity log entries.
 
 By default, there is support for activity log entries with the following events: `created`, `updated`, `deleted` and
@@ -231,8 +232,8 @@ class MyModel extends Model implements AttributeTableLabelProvider
 
 ### Values
 
-These values of the attributes are formatted using value formatters. You can add your own value formatters by
-registering them in the `FilamentActivitylogAttributeTableFormatter` facade.
+The values of the attributes are formatted using value formatters. You can add your own value formatters by registering
+them in the `FilamentActivitylogAttributeTableFormatter` facade.
 
 ```php
 <?php
@@ -248,7 +249,7 @@ class AppServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        FilamentActivitylogAttributeTable::registerValueFormatter(function (AttributeTableBuilder $formatter, mixed $value, string $key, array $attributes, string $recordClass) {
+        FilamentActivitylogAttributeTable::registerValueFormatter(function (AttributeTableBuilder $builder, mixed $value, string $key, array $attributes, string $recordClass) {
             // Implement custom value formatting logic here.
         });
     }
@@ -260,9 +261,11 @@ you can format the value. The attribute table supports HTML, so you can return a
 if you want to return HTML. All parameters are optional in your closure, so omit the parameters you don't need. The
 parameters are matched by name, not by order. So feel free to order them differently, but don't change the name.
 
-Because you get the formatter as a parameter, you can use the formatter recursively. If you do this, you convert
-`$value` to another object and call the formatter again with the new object, using
-`$formatter->formatAttributeTableValue($newValue, $key, $attributes, $recordClass)`.
+Because you get the builder as a parameter, you can use the values formatters from the builder recursively. If you do 
+this, you convert `$value` to another object and call the formatter again with the new object, using
+`$builder->formatValue($newValue, $key, $attributes, $recordClass)`. We do this in the default value formatters for
+relations. The relation value formatter recognizes the relation from the foreign key and finds the appropriate related
+model. This model is then passed to the builder again, so the builder can format the related model.
 
 The `FilamentActivitylogAttributeTableFormatter::registerValueFormatter` method accepts a second parameter, which is the
 priority of the formatter. The default priority is 0. The higher the priority, the earlier the formatter is called. All
@@ -306,7 +309,6 @@ class MyModel extends Model implements AttributeTableValuesFormatter
     }
 }
 ```
-
 
 In the `formatAttributeTableValue` method you can call `$builder->formatValue(...)` if you need to convert the value
 into another object and format this.
