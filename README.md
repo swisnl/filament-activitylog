@@ -131,7 +131,8 @@ There is a helper method for this: `EntryContent::mapEventToView`.
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Stringable;use Swis\Filament\Activitylog\Tables\EntryContent;
+use Stringable;
+use Swis\Filament\Activitylog\Tables\EntryContent;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -290,7 +291,8 @@ You can do this by implementing the `\Swis\Filament\Activitylog\Contracts\Attrib
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Swis\Filament\Activitylog\AttributeTableBuilder;use Swis\Filament\Activitylog\Contracts\AttributeTableValuesFormatter;
+use Swis\Filament\Activitylog\AttributeTableBuilder;
+use Swis\Filament\Activitylog\Contracts\AttributeTableValuesFormatter;
 
 class MyModel extends Model implements AttributeTableValuesFormatter
 {
