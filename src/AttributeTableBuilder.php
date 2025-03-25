@@ -278,10 +278,10 @@ class AttributeTableBuilder
      */
     protected function shouldSkipAttribute(string $key, string $recordClass): bool
     {
-        $instance = new $recordClass;
-
         // Skip attributes that are explicitly skipped by the model
-        if ($instance instanceof SkipsAttributeTableAttributes) {
+        if (is_a($recordClass, SkipsAttributeTableAttributes::class, true)) {
+            $instance = new $recordClass;
+
             $skippedAttributes = $instance->skipAttributeTableAttributes();
             if (in_array($key, $skippedAttributes)) {
                 return true;
@@ -385,7 +385,9 @@ class AttributeTableBuilder
         // Model specific value formatters
         $this->registerValueFormatter(function (AttributeTableBuilder $builder, mixed $value, string $key, array $attributes, string $recordClass) {
             if (is_a($recordClass, AttributeTableValuesFormatter::class, true)) {
-                return (new $recordClass)->formatAttributeTableValue($builder, $value, $key, $attributes, $recordClass);
+                $instance = new $recordClass;
+
+                return $instance->formatAttributeTableValue($builder, $value, $key, $attributes, $recordClass);
             }
 
             return null;
@@ -423,10 +425,11 @@ class AttributeTableBuilder
 
         // Formatters for casts and relations
         $this->registerValueFormatter(function (mixed $value, string $key, string $recordClass) {
-            $instance = new $recordClass;
-            if (! $instance instanceof Model) {
+            if (! is_a($recordClass, Model::class, true)) {
                 return null;
             }
+
+            $instance = new $recordClass;
             $casts = $instance->getCasts();
 
             if (
@@ -445,10 +448,11 @@ class AttributeTableBuilder
         }, -25);
 
         $this->registerValueFormatter(function (mixed $value, string $key, string $recordClass) {
-            $instance = new $recordClass;
-            if (! $instance instanceof Model) {
+            if (! is_a($recordClass, Model::class, true)) {
                 return null;
             }
+
+            $instance = new $recordClass;
             $casts = $instance->getCasts();
 
             if (
