@@ -383,7 +383,7 @@ class AttributeTableBuilder
     public function registerDefaultFormatters(): void
     {
         // Model specific value formatters
-        $this->registerValueFormatter(function (AttributeTableBuilder $builder, mixed $value, string $key, array $attributes, string $recordClass) {
+        $this->registerValueFormatter(function (AttributeTableBuilder $builder, mixed $value, string $key, array $attributes, string $recordClass): Stringable | string | null {
             if (is_a($recordClass, AttributeTableValuesFormatter::class, true)) {
                 $instance = new $recordClass;
 
@@ -394,7 +394,7 @@ class AttributeTableBuilder
         }, 256);
 
         // Formatter for specific interfaces and objects
-        $this->registerValueFormatter(function (mixed $value) {
+        $this->registerValueFormatter(function (mixed $value): Stringable | string | null {
             if ($value instanceof HasAttributeTableValue) {
                 return $value->getAttributeTableValue();
             }
@@ -402,7 +402,7 @@ class AttributeTableBuilder
             return null;
         });
 
-        $this->registerValueFormatter(function (mixed $value) {
+        $this->registerValueFormatter(function (mixed $value): ?string {
             if ($value instanceof HasLabel) {
                 return $value->getLabel();
             }
@@ -410,7 +410,7 @@ class AttributeTableBuilder
             return null;
         }, -10);
 
-        $this->registerValueFormatter(function (mixed $value) {
+        $this->registerValueFormatter(function (mixed $value): ?string {
             if (! ($value instanceof Model)) {
                 return null;
             }
@@ -426,7 +426,7 @@ class AttributeTableBuilder
         }, -10);
 
         // Formatters for casts and relations
-        $this->registerValueFormatter(function (mixed $value, string $key, string $recordClass) {
+        $this->registerValueFormatter(function (mixed $value, string $key, string $recordClass): ?string {
             if (! is_a($recordClass, Model::class, true)) {
                 return null;
             }
@@ -449,7 +449,7 @@ class AttributeTableBuilder
             return null;
         }, -25);
 
-        $this->registerValueFormatter(function (mixed $value, string $key, string $recordClass) {
+        $this->registerValueFormatter(function (mixed $value, string $key, string $recordClass): ?string {
             if (! is_a($recordClass, Model::class, true)) {
                 return null;
             }
@@ -472,14 +472,14 @@ class AttributeTableBuilder
             return null;
         }, -25);
 
-        $this->registerValueFormatter(function (AttributeTableBuilder $builder, mixed $value, string $key, array $attributes, string $recordClass) {
+        $this->registerValueFormatter(function (AttributeTableBuilder $builder, mixed $value, string $key, array $attributes, string $recordClass): Stringable | string | null {
             if (empty($value) || ! is_scalar($value)) {
-                return;
+                return null;
             }
 
             $relations = $builder->getBelongsToRelationsForModel($recordClass);
             if (! array_key_exists($key, $relations)) {
-                return;
+                return null;
             }
 
             $relationName = $relations[$key];
@@ -488,12 +488,12 @@ class AttributeTableBuilder
             if ($relation instanceof MorphTo) {
                 $type_key = $relation->getMorphType();
                 if (empty($attributes[$type_key])) {
-                    return;
+                    return null;
                 }
 
                 $relatedModel = Model::getActualClassNameForMorph($attributes[$type_key]);
                 if (! $relatedModel || ! is_a($relatedModel, Model::class, true)) {
-                    return;
+                    return null;
                 }
 
                 $valueModel = $relatedModel::find($value);
@@ -525,13 +525,15 @@ class AttributeTableBuilder
         }, -25);
 
         // Simple formatters for scalar values
-        $this->registerValueFormatter(function (mixed $value) {
+        $this->registerValueFormatter(function (mixed $value): ?string {
             if (is_null($value)) {
                 return __('filament-activitylog::activitylog.attributes_table.values.null');
             }
+
+            return null;
         }, -50);
 
-        $this->registerValueFormatter(function (mixed $value) {
+        $this->registerValueFormatter(function (mixed $value): ?string {
             if (is_bool($value)) {
                 return $value ? __('filament-activitylog::activitylog.attributes_table.values.yes') : __('filament-activitylog::activitylog.attributes_table.values.no');
             }
@@ -539,7 +541,7 @@ class AttributeTableBuilder
             return null;
         }, -50);
 
-        $this->registerValueFormatter(function (mixed $value) {
+        $this->registerValueFormatter(function (mixed $value): ?string {
             if ($value === '') {
                 return __('filament-activitylog::activitylog.attributes_table.values.empty');
             }
@@ -547,7 +549,7 @@ class AttributeTableBuilder
             return null;
         }, -50);
 
-        $this->registerValueFormatter(function (mixed $value) {
+        $this->registerValueFormatter(function (mixed $value): ?string {
             if (is_scalar($value)) {
                 return (string) $value;
             }
@@ -555,7 +557,7 @@ class AttributeTableBuilder
             return null;
         }, -50);
 
-        $this->registerValueFormatter(function (mixed $value) {
+        $this->registerValueFormatter(function (mixed $value): ?Stringable {
             if ($value instanceof Stringable) {
                 return $value;
             }
@@ -564,9 +566,12 @@ class AttributeTableBuilder
         }, -50);
 
         // Fallback formatters for objects and arrays
-        $this->registerValueFormatter(function (mixed $value) {
+        $this->registerValueFormatter(function (mixed $value): ?string {
             if (is_array($value) || is_object($value)) {
-                return json_encode($value);
+                $result = json_encode($value);
+                if ($result !== false) {
+                    return $result;
+                }
             }
 
             return null;
@@ -579,7 +584,7 @@ class AttributeTableBuilder
     public function registerDefaultLabelProviders(): void
     {
         // Model specific label provider
-        $this->registerLabelProvider(function (string $key, string $recordClass) {
+        $this->registerLabelProvider(function (string $key, string $recordClass): ?string {
             if (is_a($recordClass, AttributeTableLabelProvider::class, true)) {
                 return (new $recordClass)->getAttributeTableLabel($key, $recordClass);
             }
@@ -587,7 +592,7 @@ class AttributeTableBuilder
             return null;
         }, 256);
 
-        $this->registerLabelProvider(function (string $key) {
+        $this->registerLabelProvider(function (string $key): string {
             return Str::headline($key);
         }, -100);
     }
