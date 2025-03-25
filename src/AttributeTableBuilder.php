@@ -411,16 +411,18 @@ class AttributeTableBuilder
         }, -10);
 
         $this->registerValueFormatter(function (mixed $value) {
-            if ($value instanceof Model) {
-                $class = get_class($value);
-                $alias = array_search($class, Relation::$morphMap, strict: true) ?: $class;
-
-                if ($alias === $class) {
-                    $alias = class_basename($class);
-                }
-
-                return $alias . ': ' . $value->getKey();
+            if (! ($value instanceof Model)) {
+                return null;
             }
+
+            $alias = $value->getMorphClass();
+            $class = get_class($value);
+
+            if ($alias === $class) {
+                $alias = class_basename($class);
+            }
+
+            return $alias . ': ' . $value->getKey();
         }, -10);
 
         // Formatters for casts and relations
