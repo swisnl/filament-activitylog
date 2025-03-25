@@ -319,14 +319,32 @@ In some cases, you may want to omit certain attributes in the attribute table. Y
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
+use Swis\Filament\Activitylog\Contracts\SkipsAttributeTableAttributes;
+
+class MyModel extends Model implements SkipsAttributeTableAttributes
+{
+    public function skipAttributeTableAttributes() {
+        return ['foo', 'bar'];
+    }
+}
+```
+
+For the relatively common use case of skipping the hidden attributes, you can use the `SkipsHiddenAttributes` trait
+which is provided by the package.
+
+```php
+<?php
+
+namespace App\Models;
+
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Swis\Filament\Activitylog\Concerns\SkipsHiddenAttributes;
 use Swis\Filament\Activitylog\Contracts\SkipsAttributeTableAttributes;
 
 class User extends Authenticatable implements SkipsAttributeTableAttributes
 {
-    public function skipAttributeTableAttributes() {
-        return $this->getHidden();
-    }
+    use SkipsHiddenAttributes;
 }
 ```
 
