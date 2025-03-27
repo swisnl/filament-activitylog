@@ -1,8 +1,8 @@
 <?php
 
-namespace Swis\Filament\Activitylog\Contracts;
+namespace Swis\Filament\Activitylog\AttributeTable\Contracts;
 
-interface AttributeTableLabelProvider
+interface LabelProvider
 {
     public function getAttributeTableLabel(string $key, string $recordClass): ?string;
 }

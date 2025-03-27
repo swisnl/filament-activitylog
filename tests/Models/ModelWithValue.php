@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\HtmlString;
 use Stringable;
-use Swis\Filament\Activitylog\Contracts\HasAttributeTableValue;
+use Swis\Filament\Activitylog\AttributeTable\Contracts\HasValue;
 
 /**
  * @property int $id
  * @property string $name
  */
-class ModelWithValue extends Model implements HasAttributeTableValue
+class ModelWithValue extends Model implements HasValue
 {
     /** @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Swis\Filament\Activitylog\Tests\Database\Factories\ModelWithValueFactory> */
     use HasFactory;

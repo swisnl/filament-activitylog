@@ -1,10 +1,10 @@
 <?php
 
-namespace Swis\Filament\Activitylog\Contracts;
+namespace Swis\Filament\Activitylog\AttributeTable\Contracts;
 
 use Stringable;
 
-interface HasAttributeTableValue
+interface HasValue
 {
     public function getAttributeTableValue(): string | Stringable;
 }

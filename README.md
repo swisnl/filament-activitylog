@@ -208,7 +208,7 @@ overrides, you can register a label provider with a priority higher than 256, bu
 You can also choose to provide the labels from the model. This can be useful if you don't have structured translations
 for the labels, or if you want to provide the labels in a different way.
 
-You can do this by implementing the `\Swis\Filament\Activitylog\Contracts\AttributeTableLabelProvider` interface.
+You can do this by implementing the `\Swis\Filament\Activitylog\AttributeTableContracts\LabelProvider` interface.
 
 ```php
 <?php
@@ -216,9 +216,9 @@ You can do this by implementing the `\Swis\Filament\Activitylog\Contracts\Attrib
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Swis\Filament\Activitylog\Contracts\AttributeTableLabelProvider;
+use Swis\Filament\Activitylog\AttributeTable\Contracts\LabelProvider;
 
-class MyModel extends Model implements AttributeTableLabelProvider
+class MyModel extends Model implements LabelProvider
 {
     public function getAttributeTableLabel(string $key, string $recordClass): ?string
     {
@@ -241,15 +241,14 @@ them in the `FilamentActivitylogAttributeTableFormatter` facade.
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Stringable;
-use Swis\Filament\Activitylog\AttributeTableBuilder;
+use Swis\Filament\Activitylog\AttributeTable\Builder;
 use Swis\Filament\Activitylog\Facades\FilamentActivitylogAttributeTable;
 
 class AppServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        FilamentActivitylogAttributeTable::registerValueFormatter(function (AttributeTableBuilder $builder, mixed $value, string $key, array $attributes, string $recordClass) {
+        FilamentActivitylogAttributeTable::registerValueFormatter(function (Builder $builder, mixed $value, string $key, array $attributes, string $recordClass) {
             // Implement custom value formatting logic here.
         });
     }
@@ -286,7 +285,7 @@ match in the formatter on the type of the value, or casts of the model. If you r
 information and need to match on the `$key` and `$recordClass` parameter, the model specific overrides can be a simpler
 solution.
 
-You can do this by implementing the `\Swis\Filament\Activitylog\Contracts\AttributeTableValuesFormatter` interface.
+You can do this by implementing the `\Swis\Filament\Activitylog\AttributeTable\Contracts\ValuesFormatter` interface.
 
 ```php
 <?php
@@ -294,12 +293,12 @@ You can do this by implementing the `\Swis\Filament\Activitylog\Contracts\Attrib
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Swis\Filament\Activitylog\AttributeTableBuilder;
-use Swis\Filament\Activitylog\Contracts\AttributeTableValuesFormatter;
+use Swis\Filament\Activitylog\AttributeTable\Builder;
+use Swis\Filament\Activitylog\AttributeTable\Contracts\ValueFormatter;
 
-class MyModel extends Model implements AttributeTableValuesFormatter
+class MyModel extends Model implements ValueFormatter
 {
-    public function formatAttributeTableValue(AttributeTableBuilder $builder, mixed $value, string $key, array $attributes, string $recordClass): Stringable|string|null
+    public function formatAttributeTableValue(Builder $builder, mixed $value, string $key, array $attributes, string $recordClass): Stringable|string|null
     {
         if ($key === 'myproperty') {
             return 'This is a custom formatted value';
@@ -316,7 +315,7 @@ into another object and format this.
 ### Attribute skipping
 
 In some cases, you may want to omit certain attributes in the attribute table. You can do this by implementing the
-`\Swis\Filament\Activitylog\Contracts\SkipsAttributeTableAttributes` interface on the model.
+`\Swis\Filament\Activitylog\AttributeTable\Contracts\SkipsAttributes` interface on the model.
 
 ```php
 <?php
@@ -324,9 +323,9 @@ In some cases, you may want to omit certain attributes in the attribute table. Y
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Swis\Filament\Activitylog\Contracts\SkipsAttributeTableAttributes;
+use Swis\Filament\Activitylog\AttributeTable\Contracts\SkipsAttributes;
 
-class MyModel extends Model implements SkipsAttributeTableAttributes
+class MyModel extends Model implements SkipsAttributes
 {
     public function skipAttributeTableAttributes() {
         return ['foo', 'bar'];
@@ -343,10 +342,10 @@ which is provided by the package.
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Swis\Filament\Activitylog\Concerns\SkipsHiddenAttributes;
-use Swis\Filament\Activitylog\Contracts\SkipsAttributeTableAttributes;
+use Swis\Filament\Activitylog\AttributeTable\Concerns\SkipsHiddenAttributes;
+use Swis\Filament\Activitylog\AttributeTable\Contracts\SkipsAttributes;
 
-class User extends Authenticatable implements SkipsAttributeTableAttributes
+class User extends Authenticatable implements SkipsAttributes
 {
     use SkipsHiddenAttributes;
 }

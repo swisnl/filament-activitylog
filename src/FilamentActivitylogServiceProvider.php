@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Blade;
 use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Swis\Filament\Activitylog\AttributeTable\Builder as AttributeTableBuilder;
+use Swis\Filament\Activitylog\AttributeTable\Contracts\ModelRelationFinder as ModelRelationFinderContract;
+use Swis\Filament\Activitylog\AttributeTable\ModelRelationFinder;
 use Swis\Filament\Activitylog\Facades\FilamentActivitylogAttributeTable;
 use Swis\Filament\Activitylog\Livewire\Activitylog;
 use Swis\Filament\Activitylog\Tables\EntryContent;
@@ -28,6 +31,12 @@ class FilamentActivitylogServiceProvider extends PackageServiceProvider
         if (file_exists($package->basePath('/../resources/views'))) {
             $package->hasViews(static::$viewNamespace);
         }
+    }
+
+    public function packageRegistered(): void
+    {
+        app()->singleton(AttributeTableBuilder::class);
+        app()->singleton(ModelRelationFinderContract::class, ModelRelationFinder::class);
     }
 
     public function packageBooted(): void

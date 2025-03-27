@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\Filament\Activitylog;
+namespace Swis\Filament\Activitylog\AttributeTable;
 
 use Stringable;
 

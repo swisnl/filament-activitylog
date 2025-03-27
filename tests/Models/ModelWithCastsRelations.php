@@ -7,15 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Stringable;
-use Swis\Filament\Activitylog\AttributeTableBuilder;
-use Swis\Filament\Activitylog\Contracts\AttributeTableValuesFormatter;
-use Swis\Filament\Activitylog\Contracts\SkipsAttributeTableAttributes;
+use Swis\Filament\Activitylog\AttributeTable\Builder;
+use Swis\Filament\Activitylog\AttributeTable\Contracts\SkipsAttributes;
+use Swis\Filament\Activitylog\AttributeTable\Contracts\ValueFormatter;
 
 /**
  * @property int $id
  * @property string $name
  */
-class ModelWithCastsRelations extends Model implements AttributeTableValuesFormatter, SkipsAttributeTableAttributes
+class ModelWithCastsRelations extends Model implements SkipsAttributes, ValueFormatter
 {
     /** @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Swis\Filament\Activitylog\Tests\Database\Factories\ModelWithCastsRelationsFactory> */
     use HasFactory;
@@ -37,7 +37,7 @@ class ModelWithCastsRelations extends Model implements AttributeTableValuesForma
         ];
     }
 
-    public function formatAttributeTableValue(AttributeTableBuilder $builder, mixed $value, string $key, array $attributes, string $recordClass): Stringable | string | null
+    public function formatAttributeTableValue(Builder $builder, mixed $value, string $key, array $attributes, string $recordClass): Stringable | string | null
     {
         if ($key === 'property_with_model_override') {
             return 'model_override';

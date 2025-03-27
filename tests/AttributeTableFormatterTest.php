@@ -167,7 +167,7 @@ it('builds attributes', function () {
 
     expect($attributes)->toBeInstanceOf(\Illuminate\Support\Collection::class)
         ->and($attributes->count())->toBe(1)
-        ->and($attributes->first())->toEqual(\Swis\Filament\Activitylog\Attribute::make('property', 'foo', 'Property')->withOldValue('bar'));
+        ->and($attributes->first())->toEqual(\Swis\Filament\Activitylog\AttributeTable\Attribute::make('property', 'foo', 'Property')->withOldValue('bar'));
 });
 
 it('skips attributes', function () {
