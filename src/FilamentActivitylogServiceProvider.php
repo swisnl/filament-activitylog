@@ -11,8 +11,8 @@ use Swis\Filament\Activitylog\AttributeTable\Contracts\ModelRelationFinder as Mo
 use Swis\Filament\Activitylog\AttributeTable\LabelProviders;
 use Swis\Filament\Activitylog\AttributeTable\ModelRelationFinder;
 use Swis\Filament\Activitylog\AttributeTable\ValueFormatters;
+use Swis\Filament\Activitylog\EntryContent\EntryContentManager;
 use Swis\Filament\Activitylog\Livewire\Activitylog;
-use Swis\Filament\Activitylog\Tables\EntryContent;
 use Swis\Filament\Activitylog\View\AttributesTable;
 
 class FilamentActivitylogServiceProvider extends PackageServiceProvider
@@ -37,6 +37,7 @@ class FilamentActivitylogServiceProvider extends PackageServiceProvider
     public function packageRegistered(): void
     {
         app()->singleton(AttributeTableBuilder::class);
+        app()->singleton(EntryContentManager::class);
         app()->singleton(ModelRelationFinderContract::class, ModelRelationFinder::class);
 
         app()->afterResolving(AttributeTableBuilder::class, function (AttributeTableBuilder $builder) {
@@ -67,20 +68,22 @@ class FilamentActivitylogServiceProvider extends PackageServiceProvider
             $builder->registerLabelProvider(app(LabelProviders\ModelSpecificProvider::class), 256);
             $builder->registerLabelProvider(app(LabelProviders\HeadlineProvider::class), -100);
         });
+
+        app()->afterResolving(EntryContentManager::class, function (EntryContentManager $manager) {
+            foreach ([
+                'commented',
+                'created',
+                'updated',
+                'deleted',
+            ] as $event) {
+                $manager->registerEventViewResolver($event, 'filament-activitylog::entry-content.' . $event, -100);
+            }
+        });
     }
 
     public function packageBooted(): void
     {
         Livewire::component('filament-activitylog', Activitylog::class);
         Blade::component(AttributesTable::class, 'filament-activitylog-attributes-table');
-
-        foreach ([
-            'commented',
-            'created',
-            'updated',
-            'deleted',
-        ] as $event) {
-            EntryContent::mapEventToView($event, 'filament-activitylog::entry-content.' . $event);
-        }
     }
 }

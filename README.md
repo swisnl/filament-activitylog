@@ -118,13 +118,14 @@ The package shows a row in the activity log for each activity log entry. Dependi
 the row is shown in a different way. The package provides a way to customize the display of the activity log entries.
 
 By default, there is support for activity log entries with the following events: `created`, `updated`, `deleted` and
-`commented`. This is done using view resolvers on the `EntryContent` class.
+`commented`. This is done using view resolvers for entry content.
 
 If you need to support other events, or if you need to override the default view resolvers, you can add your own view
 resolvers. The view resolvers are called with the activity log entry. The view resolvers should return the name of the
 view to render (or `null` if the view resolver can't handle the entry). You can add your own view resolvers by
-calling the `EntryContent::appendViewResolver` method. In most cases, you just want to map a specific event to a view.
-There is a helper method for this: `EntryContent::mapEventToView`.
+calling the `FilamentActivitylog::registerEntryContentViewResolver` method. In most cases, you just want to map a 
+specific event to a view. There is a helper method for this: 
+`FilamentActivitylog::registerEntryContentEventViewResolver`.
 
 ```php
 <?php
@@ -132,14 +133,13 @@ There is a helper method for this: `EntryContent::mapEventToView`.
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Stringable;
-use Swis\Filament\Activitylog\Tables\EntryContent;
+use Swis\Filament\Activitylog\Facades\FilamentActivitylog;
 
 class AppServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        EntryContent::mapEventToView('myevent', 'activitylog.entries.myevent');
+        FilamentActivitylog::registerEntryContentEventViewResolver('myevent', 'activitylog.entries.myevent');
     }
 }
 ```

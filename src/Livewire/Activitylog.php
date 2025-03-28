@@ -17,8 +17,8 @@ use Illuminate\Database\Eloquent\Model;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Spatie\Activitylog\ActivitylogServiceProvider;
+use Swis\Filament\Activitylog\EntryContent\EntryContent;
 use Swis\Filament\Activitylog\Facades\FilamentActivitylog;
-use Swis\Filament\Activitylog\Tables\EntryContent;
 
 use function Filament\authorize;
 
