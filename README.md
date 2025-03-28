@@ -26,35 +26,6 @@ this will also install that package. Follow the [installation instructions of sp
 The package provides two actions, one for tables, and one for pages. Add the action for the resources that have
 activity. The actions show a modal with the activity log entries for the record and a form to add a comment.
 
-By default, the actions use the `viewActivitylog` and `commentActivitylog` abilities on the model policy. If the policy
-doesn't exist or the method is not defined in the policy, the action is shown to everyone.
-
-```php
-<?php
-
-namespace App\Policies;
-
-use App\Models\MyModel;
-use App\Models\User;
-
-class MyModelPolicy
-{
-    public function viewActivitylog(User $user, MyModel $myModel)
-    {
-        return $user->isAdmin();
-    }
-
-    public function commentActivitylog(User $user, MyModel $myModel)
-    {
-        return $user->isAdmin();
-    }
-}
-```
-
-Both actions also have methods to enable or disable the comment form. The comment form is enabled by default. You can 
-disable the comment form by calling the `disableComments` method on the action. If the comment form is disabled, the 
-policy is ignored for the comment form.
-
 ### Tables
 
 For tables add the `Swis\Filament\Activitylog\Tables\Actions\ActivitylogAction` to the actions in the resource table.
@@ -111,6 +82,37 @@ class EditContract extends EditRecord
     }
 }
 ```
+
+## Access control
+
+By default, the actions use the `viewActivitylog` and `commentActivitylog` abilities on the model policy. If the policy
+doesn't exist or the method is not defined in the policy, the action is shown to everyone.
+
+```php
+<?php
+
+namespace App\Policies;
+
+use App\Models\MyModel;
+use App\Models\User;
+
+class MyModelPolicy
+{
+    public function viewActivitylog(User $user, MyModel $myModel)
+    {
+        return $user->isAdmin();
+    }
+
+    public function commentActivitylog(User $user, MyModel $myModel)
+    {
+        return $user->isAdmin();
+    }
+}
+```
+
+Both actions also have methods to enable or disable the comment form. The comment form is enabled by default. You can
+disable the comment form by calling the `disableComments` method on the action. If the comment form is disabled, the
+policy is ignored for the comment form.
 
 ## Customizing the activity log entries
 
