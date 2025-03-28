@@ -84,6 +84,6 @@ class FilamentActivitylogServiceProvider extends PackageServiceProvider
     public function packageBooted(): void
     {
         Livewire::component('filament-activitylog', Activitylog::class);
-        Blade::component(AttributesTable::class, 'filament-activitylog-attributes-table');
+        Blade::component(AttributesTable::class, 'filament-activitylog::attributes-table');
     }
 }
