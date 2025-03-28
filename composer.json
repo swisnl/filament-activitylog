@@ -68,7 +68,7 @@
                 "Swis\\Filament\\Activitylog\\FilamentActivitylogServiceProvider"
             ],
             "aliases": {
-                "FilamentActivitylogAttributeTable": "Swis\\Filament\\Activitylog\\Facades\\FilamentActivitylogAttributeTable"
+                "FilamentActivitylog": "Swis\\Filament\\Activitylog\\Facades\\FilamentActivitylog"
             }
         }
     },

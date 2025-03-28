@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\View\Component;
-use Swis\Filament\Activitylog\Facades\FilamentActivitylogAttributeTable;
+use Swis\Filament\Activitylog\Facades\FilamentActivitylog;
 
 class AttributesTable extends Component
 {
@@ -22,7 +22,7 @@ class AttributesTable extends Component
 
     public function render(): View | Closure | string
     {
-        $rows = FilamentActivitylogAttributeTable::buildAttributes(
+        $rows = FilamentActivitylog::attributeTableBuilder()->buildAttributes(
             get_class($this->record),
             $this->newAttributes,
             $this->oldAttributes

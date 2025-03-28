@@ -8,8 +8,9 @@ use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Swis\Filament\Activitylog\AttributeTable\Builder as AttributeTableBuilder;
 use Swis\Filament\Activitylog\AttributeTable\Contracts\ModelRelationFinder as ModelRelationFinderContract;
+use Swis\Filament\Activitylog\AttributeTable\LabelProviders;
 use Swis\Filament\Activitylog\AttributeTable\ModelRelationFinder;
-use Swis\Filament\Activitylog\Facades\FilamentActivitylogAttributeTable;
+use Swis\Filament\Activitylog\AttributeTable\ValueFormatters;
 use Swis\Filament\Activitylog\Livewire\Activitylog;
 use Swis\Filament\Activitylog\Tables\EntryContent;
 use Swis\Filament\Activitylog\View\AttributesTable;
@@ -37,6 +38,35 @@ class FilamentActivitylogServiceProvider extends PackageServiceProvider
     {
         app()->singleton(AttributeTableBuilder::class);
         app()->singleton(ModelRelationFinderContract::class, ModelRelationFinder::class);
+
+        app()->afterResolving(AttributeTableBuilder::class, function (AttributeTableBuilder $builder) {
+            // Model specific value formatters
+            $builder->registerValueFormatter(app(ValueFormatters\ModelSpecificFormatter::class), 256);
+
+            // Formatter for specific interfaces and objects
+            $builder->registerValueFormatter(app(ValueFormatters\HasValueFormatter::class), -10);
+            $builder->registerValueFormatter(app(ValueFormatters\HasLabelFormatter::class), -10);
+            $builder->registerValueFormatter(app(ValueFormatters\ModelFormatter::class), -10);
+
+            // Formatters for casts and relations
+            $builder->registerValueFormatter(app(ValueFormatters\DateCastFormatter::class), -25);
+            $builder->registerValueFormatter(app(ValueFormatters\DateTimeCastFormatter::class), -25);
+            $builder->registerValueFormatter(app(ValueFormatters\BelongsToRelationFormatter::class), -25);
+
+            // Simple formatters for scalar values
+            $builder->registerValueFormatter(app(ValueFormatters\NullFormatter::class), -50);
+            $builder->registerValueFormatter(app(ValueFormatters\BoolFormatter::class), -50);
+            $builder->registerValueFormatter(app(ValueFormatters\EmptyFormatter::class), -50);
+            $builder->registerValueFormatter(app(ValueFormatters\ScalarFormatter::class), -50);
+            $builder->registerValueFormatter(app(ValueFormatters\StringableFormatter::class), -50);
+
+            // Fallback formatters for objects and arrays
+            $builder->registerValueFormatter(app(ValueFormatters\JsonFormatter::class), -100);
+
+            // Label providers
+            $builder->registerLabelProvider(app(LabelProviders\ModelSpecificProvider::class), 256);
+            $builder->registerLabelProvider(app(LabelProviders\HeadlineProvider::class), -100);
+        });
     }
 
     public function packageBooted(): void
@@ -52,8 +82,5 @@ class FilamentActivitylogServiceProvider extends PackageServiceProvider
         ] as $event) {
             EntryContent::mapEventToView($event, 'filament-activitylog::entry-content.' . $event);
         }
-
-        FilamentActivitylogAttributeTable::registerDefaultFormatters();
-        FilamentActivitylogAttributeTable::registerDefaultLabelProviders();
     }
 }

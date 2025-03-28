@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Spatie\Activitylog\ActivitylogServiceProvider;
-use Swis\Filament\Activitylog\Facades\FilamentActivitylogAttributeTable;
+use Swis\Filament\Activitylog\Facades\FilamentActivitylog;
 use Swis\Filament\Activitylog\Tables\EntryContent;
 
 use function Filament\authorize;
@@ -95,7 +95,7 @@ class Activitylog extends Component implements Forms\Contracts\HasForms, Tables\
                                 return null;
                             }
 
-                            return FilamentActivitylogAttributeTable::formatValue($state, 'causer', [], $modelClass);
+                            return FilamentActivitylog::attributeTableBuilder()->formatValue($state, 'causer', [], $modelClass);
                         })
                         ->weight(FontWeight::SemiBold),
                     Tables\Columns\TextColumn::make('created_at')

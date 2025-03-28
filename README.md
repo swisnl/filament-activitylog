@@ -158,7 +158,7 @@ provides some ways to do this. For most projects, you will need to do some custo
 In the activity log data, we only have the key of the attribute. To show a human-readable label, we need to map the key
 to a label. This is done using label providers. The default label provider simply runs the key through
 `Str::headline`. You can add your own label providers by registering them in the
-`FilamentActivitylogAttributeTableFormatter` facade.
+`FilamentActivitylog` facade.
 
 ```php
 <?php
@@ -167,13 +167,13 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Stringable;
-use Swis\Filament\Activitylog\Facades\FilamentActivitylogAttributeTable;
+use Swis\Filament\Activitylog\Facades\FilamentActivitylog;
 
 class AppServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        FilamentActivitylogAttributeTable::registerLabelProvider(function ($key, $recordClass) {
+        FilamentActivitylog::registerAttributeTableLabelProvider(function ($key, $recordClass) {
             $instance = new $recordClass;
 
             $translationKey = $instance->getMorphClass().'.fields.'.$key.'.label';
@@ -194,7 +194,7 @@ The label provider is called with the key of the attribute and the class name of
 in your closure, so omit the parameters you don't need. The parameters are matched by name, not by order. So feel free
 to order them differently, but don't change the name.
 
-The `FilamentActivitylogAttributeTableFormatter::registerLabelProvider` method accepts a second parameter, which is the
+The `FilamentActivitylog::registerAttributeTableLabelProvider` method accepts a second parameter, which is the
 priority of the label provider. The default priority is 0. The higher the priority, the earlier the provider is called.
 The built-in label providers has a negative priority, so they are called after custom providers (unless you explicitly
 give them a lower priority).
@@ -233,7 +233,7 @@ class MyModel extends Model implements LabelProvider
 ### Values
 
 The values of the attributes are formatted using value formatters. You can add your own value formatters by registering
-them in the `FilamentActivitylogAttributeTableFormatter` facade.
+them in the `FilamentActivitylog` facade.
 
 ```php
 <?php
@@ -242,13 +242,13 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Swis\Filament\Activitylog\AttributeTable\Builder;
-use Swis\Filament\Activitylog\Facades\FilamentActivitylogAttributeTable;
+use Swis\Filament\Activitylog\Facades\FilamentActivitylog;
 
 class AppServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        FilamentActivitylogAttributeTable::registerValueFormatter(function (Builder $builder, mixed $value, string $key, array $attributes, string $recordClass) {
+        FilamentActivitylog::registerAttributeTableValueFormatter(function (Builder $builder, mixed $value, string $key, array $attributes, string $recordClass) {
             // Implement custom value formatting logic here.
         });
     }
@@ -266,7 +266,7 @@ this, you convert `$value` to another object and call the formatter again with t
 relations. The relation value formatter recognizes the relation from the foreign key and finds the appropriate related
 model. This model is then passed to the builder again, so the builder can format the related model.
 
-The `FilamentActivitylogAttributeTableFormatter::registerValueFormatter` method accepts a second parameter, which is the
+The `FilamentActivitylog::registerAttributeTableValueFormatter` method accepts a second parameter, which is the
 priority of the formatter. The default priority is 0. The higher the priority, the earlier the formatter is called. All
 built-in formatters have a negative priority, so they are called after custom formatters (unless you explicitly give
 them a lower priority).
@@ -280,7 +280,7 @@ can register a formatter with a priority higher than 256, but that should be an 
 In rare cases you may need to format a specific attribute for a specific model differently than other values of the same
 type.
 
-In most cases you should prefer to use `FilamentActivitylogAttributeTableFormatter::registerValueFormatter` logic, and
+In most cases you should prefer to use `FilamentActivitylog::registerAttributeTableValueFormatter` logic, and
 match in the formatter on the type of the value, or casts of the model. If you really can't match based on this
 information and need to match on the `$key` and `$recordClass` parameter, the model specific overrides can be a simpler
 solution.

@@ -277,42 +277,4 @@ class Builder
         // Skip the type attribute for polymorphic relations
         return $this->modelRelationFinder->isMorphTypeKey($recordClass, $key);
     }
-
-    /**
-     * Register the default value formatters.
-     */
-    public function registerDefaultFormatters(): void
-    {
-        // Model specific value formatters
-        $this->registerValueFormatter(app(ValueFormatters\ModelSpecificFormatter::class), 256);
-
-        // Formatter for specific interfaces and objects
-        $this->registerValueFormatter(app(ValueFormatters\HasValueFormatter::class), -10);
-        $this->registerValueFormatter(app(ValueFormatters\HasLabelFormatter::class), -10);
-        $this->registerValueFormatter(app(ValueFormatters\ModelFormatter::class), -10);
-
-        // Formatters for casts and relations
-        $this->registerValueFormatter(app(ValueFormatters\DateCastFormatter::class), -25);
-        $this->registerValueFormatter(app(ValueFormatters\DateTimeCastFormatter::class), -25);
-        $this->registerValueFormatter(app(ValueFormatters\BelongsToRelationFormatter::class), -25);
-
-        // Simple formatters for scalar values
-        $this->registerValueFormatter(app(ValueFormatters\NullFormatter::class), -50);
-        $this->registerValueFormatter(app(ValueFormatters\BoolFormatter::class), -50);
-        $this->registerValueFormatter(app(ValueFormatters\EmptyFormatter::class), -50);
-        $this->registerValueFormatter(app(ValueFormatters\ScalarFormatter::class), -50);
-        $this->registerValueFormatter(app(ValueFormatters\StringableFormatter::class), -50);
-
-        // Fallback formatters for objects and arrays
-        $this->registerValueFormatter(app(ValueFormatters\JsonFormatter::class), -100);
-    }
-
-    /**
-     * Register the default label providers.
-     */
-    public function registerDefaultLabelProviders(): void
-    {
-        $this->registerLabelProvider(app(LabelProviders\ModelSpecificProvider::class), 256);
-        $this->registerLabelProvider(app(LabelProviders\HeadlineProvider::class), -100);
-    }
 }
