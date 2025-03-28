@@ -1,4 +1,4 @@
-# Integrates spatie/laravel-activitylog with Filament
+# Filament integration for spatie/laravel-activitylog
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/swisnl/filament-activitylog.svg?style=flat-square)](https://packagist.org/packages/swisnl/filament-activitylog)
 [![Software License](https://img.shields.io/packagist/l/swisnl/filament-activitylog.svg)](LICENSE)
