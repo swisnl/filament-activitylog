@@ -1,7 +1,7 @@
 # Filament integration for spatie/laravel-activitylog
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/swisnl/filament-activitylog.svg?style=flat-square)](https://packagist.org/packages/swisnl/filament-activitylog)
-[![Software License](https://img.shields.io/packagist/l/swisnl/filament-activitylog.svg)](LICENSE)
+[![Software License](https://img.shields.io/packagist/l/swisnl/filament-activitylog.svg)](LICENSE.md)
 [![Buy us a tree](https://img.shields.io/badge/Treeware-%F0%9F%8C%B3-lightgreen.svg)](https://plant.treeware.earth/swisnl/filament-activitylog)
 [![Made by SWIS](https://img.shields.io/badge/%F0%9F%9A%80-made%20by%20SWIS-%230737A9.svg)](https://www.swis.nl)
 
