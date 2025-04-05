@@ -4,4 +4,8 @@ All notable changes to `filament-activitylog` will be documented in this file.
 
 ## [Unreleased]
 
-- initial release
+- Nothing
+
+## [1.0.0] - 2025-04-05
+
+- Initial release
