@@ -10,6 +10,9 @@ This package provides an interface to show activity log entries (from
 is exposed using actions. The actions show a modal with the activity log entries for the record. The package also
 provides a way to add comments as activity log entries.
 
+![Screenshot of Filament Demo Categories pages with Activity Log overlay modal](https://github.com/user-attachments/assets/b757818a-4d57-4baa-85b2-ab0cbc6a1144)
+
+
 ## Installation
 
 You can install the package via composer:
