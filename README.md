@@ -369,11 +369,11 @@ composer test
 
 ## Changelog
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+Please see [CHANGELOG](https://github.com/swisnl/filament-activitylog/blob/main/CHANGELOG.md) for more information on what has changed recently.
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) and [CODE_OF_CONDUCT](CODE_OF_CONDUCT.md) for details.
+Please see [CONTRIBUTING](https://github.com/swisnl/filament-activitylog/blob/main/CONTRIBUTING.md) and [CODE_OF_CONDUCT](https://github.com/swisnl/filament-activitylog/blob/main/CODE_OF_CONDUCT.md) for details.
 
 ## Security
 
@@ -386,7 +386,7 @@ If you discover any security related issues, please email security@swis.nl inste
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+The MIT License (MIT). Please see [License File](https://github.com/swisnl/filament-activitylog/blob/main/LICENSE.md) for more information.
 
 This package is [Treeware](https://treeware.earth). If you use it in production, then we ask that you
 [**buy the world a tree**](https://plant.treeware.earth/swisnl/filament-activitylog) to thank us for our work. By
