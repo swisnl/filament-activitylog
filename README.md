@@ -382,7 +382,7 @@ If you discover any security related issues, please email security@swis.nl inste
 ## Credits
 
 - [Rolf van de Krol](https://github.com/rolfvandekrol)
-- [All Contributors](../../contributors)
+- [All Contributors](https://github.com/swisnl/filament-activitylog/contributors)
 
 ## License
 
