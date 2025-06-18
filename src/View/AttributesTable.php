@@ -1,12 +1,12 @@
 <?php
 
-namespace Swis\Filament\Activitylog\View;
+namespace Swis\Filament\ActivityLog\View;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\View\Component;
-use Swis\Filament\Activitylog\Facades\FilamentActivitylog;
+use Swis\Filament\ActivityLog\Facades\FilamentActivityLog;
 
 class AttributesTable extends Component
 {
@@ -22,7 +22,7 @@ class AttributesTable extends Component
 
     public function render(): View | Closure | string
     {
-        $rows = FilamentActivitylog::attributeTableBuilder()->buildAttributes(
+        $rows = FilamentActivityLog::attributeTableBuilder()->buildAttributes(
             get_class($this->record),
             $this->newAttributes,
             $this->oldAttributes

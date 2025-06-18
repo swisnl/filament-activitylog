@@ -1,12 +1,12 @@
 <?php
 
-namespace Swis\Filament\Activitylog\Tests\Models;
+namespace Swis\Filament\ActivityLog\Tests\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\HtmlString;
 use Stringable;
-use Swis\Filament\Activitylog\AttributeTable\Contracts\HasValue;
+use Swis\Filament\ActivityLog\AttributeTable\Contracts\HasValue;
 
 /**
  * @property int $id
@@ -14,7 +14,7 @@ use Swis\Filament\Activitylog\AttributeTable\Contracts\HasValue;
  */
 class ModelWithValue extends Model implements HasValue
 {
-    /** @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Swis\Filament\Activitylog\Tests\Database\Factories\ModelWithValueFactory> */
+    /** @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Swis\Filament\ActivityLog\Tests\Database\Factories\ModelWithValueFactory> */
     use HasFactory;
 
     protected $table = 'models_with_value';

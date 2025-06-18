@@ -1,34 +1,34 @@
 <?php
 
-namespace Swis\Filament\Activitylog\AttributeTable;
+namespace Swis\Filament\ActivityLog\AttributeTable;
 
 use Closure;
 use Illuminate\Support\Collection;
 use Stringable;
-use Swis\Filament\Activitylog\AttributeTable\Contracts\LabelProvider;
-use Swis\Filament\Activitylog\AttributeTable\Contracts\ModelRelationFinder as ModelRelationFinderContract;
-use Swis\Filament\Activitylog\AttributeTable\Contracts\SkipsAttributes;
-use Swis\Filament\Activitylog\AttributeTable\Contracts\ValueFormatter;
+use Swis\Filament\ActivityLog\AttributeTable\Contracts\LabelProvider;
+use Swis\Filament\ActivityLog\AttributeTable\Contracts\ModelRelationFinder as ModelRelationFinderContract;
+use Swis\Filament\ActivityLog\AttributeTable\Contracts\SkipsAttributes;
+use Swis\Filament\ActivityLog\AttributeTable\Contracts\ValueFormatter;
 
 class Builder
 {
     /**
-     * @var array<int, array<array-key, \Closure|\Swis\Filament\Activitylog\AttributeTable\Contracts\ValueFormatter>>
+     * @var array<int, array<array-key, \Closure|\Swis\Filament\ActivityLog\AttributeTable\Contracts\ValueFormatter>>
      */
     protected array $valueFormatters = [];
 
     /**
-     * @var array<array-key, \Closure|\Swis\Filament\Activitylog\AttributeTable\Contracts\ValueFormatter>|null
+     * @var array<array-key, \Closure|\Swis\Filament\ActivityLog\AttributeTable\Contracts\ValueFormatter>|null
      */
     protected ?array $sortedValueFormatters = null;
 
     /**
-     * @var array<int, array<array-key, \Closure|\Swis\Filament\Activitylog\AttributeTable\Contracts\LabelProvider>>
+     * @var array<int, array<array-key, \Closure|\Swis\Filament\ActivityLog\AttributeTable\Contracts\LabelProvider>>
      */
     protected array $labelProviders = [];
 
     /**
-     * @var array<array-key, \Closure|\Swis\Filament\Activitylog\AttributeTable\Contracts\LabelProvider>|null
+     * @var array<array-key, \Closure|\Swis\Filament\ActivityLog\AttributeTable\Contracts\LabelProvider>|null
      */
     protected ?array $sortedLabelProviders = null;
 
@@ -52,7 +52,7 @@ class Builder
      * be injected by type hinting. The closure should return a string or an instance of Stringable. If the closure
      * returns null, the next formatter in the chain will be called.
      *
-     * A value formatter can also be an instance of \Swis\Filament\Activitylog\AttributeTable\Contracts\ValueFormatter.
+     * A value formatter can also be an instance of \Swis\Filament\ActivityLog\AttributeTable\Contracts\ValueFormatter.
      *
      * The priority determines the order in which the value formatters are called. The higher the priority, the earlier
      * the value formatter is called. The default priority is 0. The default value formatters are all registered with a
@@ -74,7 +74,7 @@ class Builder
     /**
      * Get the registered value formatters in order of priority.
      *
-     * @return array<array-key, \Closure|\Swis\Filament\Activitylog\AttributeTable\Contracts\ValueFormatter>
+     * @return array<array-key, \Closure|\Swis\Filament\ActivityLog\AttributeTable\Contracts\ValueFormatter>
      */
     protected function getSortedValueFormatters(): array
     {
@@ -146,7 +146,7 @@ class Builder
      * be injected by type hinting. The closure should return a string or null. If the closure returns null, the next
      * label provider in the chain will be called.
      *
-     * A label provider can also be an instance of \Swis\Filament\Activitylog\AttributeTable\Contracts\LabelProvider.
+     * A label provider can also be an instance of \Swis\Filament\ActivityLog\AttributeTable\Contracts\LabelProvider.
      *
      * The priority determines the order in which the label providers are called. The higher the priority, the earlier
      * the label provider is called. The default priority is 0. The default label providers are all registered with a
@@ -168,7 +168,7 @@ class Builder
     /**
      * Get the registered label providers in order of priority.
      *
-     * @return array<array-key, \Closure|\Swis\Filament\Activitylog\AttributeTable\Contracts\LabelProvider>
+     * @return array<array-key, \Closure|\Swis\Filament\ActivityLog\AttributeTable\Contracts\LabelProvider>
      */
     protected function getSortedLabelProviders(): array
     {

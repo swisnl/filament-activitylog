@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\Filament\Activitylog\AttributeTable\Contracts;
+namespace Swis\Filament\ActivityLog\AttributeTable\Contracts;
 
 interface SkipsAttributes
 {

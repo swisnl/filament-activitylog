@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\Filament\Activitylog\Tests\Models;
+namespace Swis\Filament\ActivityLog\Tests\Models;
 
 use Filament\Support\Contracts\HasLabel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ModelWithLabel extends Model implements HasLabel
 {
-    /** @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Swis\Filament\Activitylog\Tests\Database\Factories\ModelWithLabelFactory> */
+    /** @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Swis\Filament\ActivityLog\Tests\Database\Factories\ModelWithLabelFactory> */
     use HasFactory;
 
     protected $table = 'models_with_label';

@@ -1,9 +1,9 @@
 <?php
 
-namespace Swis\Filament\Activitylog\EntryContent\Contracts;
+namespace Swis\Filament\ActivityLog\EntryContent\Contracts;
 
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Activitylog\Contracts\Activity;
+use Spatie\ActivityLog\Contracts\Activity;
 
 interface ViewResolver
 {

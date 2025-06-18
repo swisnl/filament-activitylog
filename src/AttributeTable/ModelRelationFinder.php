@@ -1,13 +1,13 @@
 <?php
 
-namespace Swis\Filament\Activitylog\AttributeTable;
+namespace Swis\Filament\ActivityLog\AttributeTable;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use ReflectionClass;
 use ReflectionNamedType;
-use Swis\Filament\Activitylog\AttributeTable\Contracts\ModelRelationFinder as ModelRelationFinderContract;
+use Swis\Filament\ActivityLog\AttributeTable\Contracts\ModelRelationFinder as ModelRelationFinderContract;
 
 class ModelRelationFinder implements ModelRelationFinderContract
 {

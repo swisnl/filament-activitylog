@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\Filament\Activitylog\Tests;
+namespace Swis\Filament\ActivityLog\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
-use Swis\Filament\Activitylog\FilamentActivitylogServiceProvider;
+use Swis\Filament\ActivityLog\FilamentActivityLogServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -29,7 +29,7 @@ class TestCase extends Orchestra
         Factory::guessFactoryNamesUsing(
             function (string $modelName): string {
                 /** @var class-string<\Illuminate\Database\Eloquent\Factories\Factory<\Illuminate\Database\Eloquent\Model>> $factory */
-                $factory = 'Swis\\Filament\\Activitylog\\Tests\\Database\\Factories\\' . class_basename($modelName) . 'Factory';
+                $factory = 'Swis\\Filament\\ActivityLog\\Tests\\Database\\Factories\\' . class_basename($modelName) . 'Factory';
 
                 return $factory;
             }
@@ -51,7 +51,7 @@ class TestCase extends Orchestra
             SupportServiceProvider::class,
             TablesServiceProvider::class,
             WidgetsServiceProvider::class,
-            FilamentActivitylogServiceProvider::class,
+            FilamentActivityLogServiceProvider::class,
         ];
     }
 

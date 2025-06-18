@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\Filament\Activitylog\EntryContent;
+namespace Swis\Filament\ActivityLog\EntryContent;
 
 use Filament\Tables\Columns\Layout\Component;
 use Illuminate\Contracts\View\View;

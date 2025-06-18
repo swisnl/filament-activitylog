@@ -1,15 +1,15 @@
 <?php
 
-namespace Swis\Filament\Activitylog;
+namespace Swis\Filament\ActivityLog;
 
 use Closure;
-use Swis\Filament\Activitylog\AttributeTable\Builder as AttributeTableBuilder;
-use Swis\Filament\Activitylog\AttributeTable\Contracts\LabelProvider;
-use Swis\Filament\Activitylog\AttributeTable\Contracts\ValueFormatter;
-use Swis\Filament\Activitylog\EntryContent\Contracts\ViewResolver;
-use Swis\Filament\Activitylog\EntryContent\EntryContentManager;
+use Swis\Filament\ActivityLog\AttributeTable\Builder as AttributeTableBuilder;
+use Swis\Filament\ActivityLog\AttributeTable\Contracts\LabelProvider;
+use Swis\Filament\ActivityLog\AttributeTable\Contracts\ValueFormatter;
+use Swis\Filament\ActivityLog\EntryContent\Contracts\ViewResolver;
+use Swis\Filament\ActivityLog\EntryContent\EntryContentManager;
 
-class FilamentActivitylogManager
+class FilamentActivityLogManager
 {
     public function attributeTableBuilder(): AttributeTableBuilder
     {

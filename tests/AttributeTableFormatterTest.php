@@ -1,10 +1,10 @@
 <?php
 
 use Illuminate\Support\HtmlString;
-use Swis\Filament\Activitylog\AttributeTable\Builder;
-use Swis\Filament\Activitylog\Tests\Models\ModelWithCastsRelations;
-use Swis\Filament\Activitylog\Tests\Models\ModelWithLabel;
-use Swis\Filament\Activitylog\Tests\Models\ModelWithValue;
+use Swis\Filament\ActivityLog\AttributeTable\Builder;
+use Swis\Filament\ActivityLog\Tests\Models\ModelWithCastsRelations;
+use Swis\Filament\ActivityLog\Tests\Models\ModelWithLabel;
+use Swis\Filament\ActivityLog\Tests\Models\ModelWithValue;
 
 it('formats with model specific overrides', function () {
     $value = app(Builder::class)->formatValue('foo', 'property_with_model_override', [], ModelWithCastsRelations::class);
@@ -167,7 +167,7 @@ it('builds attributes', function () {
 
     expect($attributes)->toBeInstanceOf(\Illuminate\Support\Collection::class)
         ->and($attributes->count())->toBe(1)
-        ->and($attributes->first())->toEqual(\Swis\Filament\Activitylog\AttributeTable\Attribute::make('property', 'foo', 'Property')->withOldValue('bar'));
+        ->and($attributes->first())->toEqual(\Swis\Filament\ActivityLog\AttributeTable\Attribute::make('property', 'foo', 'Property')->withOldValue('bar'));
 });
 
 it('skips attributes', function () {
