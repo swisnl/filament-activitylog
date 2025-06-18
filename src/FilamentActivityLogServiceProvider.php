@@ -1,21 +1,21 @@
 <?php
 
-namespace Swis\Filament\Activitylog;
+namespace Swis\Filament\ActivityLog;
 
 use Illuminate\Support\Facades\Blade;
 use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Swis\Filament\Activitylog\AttributeTable\Builder as AttributeTableBuilder;
-use Swis\Filament\Activitylog\AttributeTable\Contracts\ModelRelationFinder as ModelRelationFinderContract;
-use Swis\Filament\Activitylog\AttributeTable\LabelProviders;
-use Swis\Filament\Activitylog\AttributeTable\ModelRelationFinder;
-use Swis\Filament\Activitylog\AttributeTable\ValueFormatters;
-use Swis\Filament\Activitylog\EntryContent\EntryContentManager;
-use Swis\Filament\Activitylog\Livewire\Activitylog;
-use Swis\Filament\Activitylog\View\AttributesTable;
+use Swis\Filament\ActivityLog\AttributeTable\Builder as AttributeTableBuilder;
+use Swis\Filament\ActivityLog\AttributeTable\Contracts\ModelRelationFinder as ModelRelationFinderContract;
+use Swis\Filament\ActivityLog\AttributeTable\LabelProviders;
+use Swis\Filament\ActivityLog\AttributeTable\ModelRelationFinder;
+use Swis\Filament\ActivityLog\AttributeTable\ValueFormatters;
+use Swis\Filament\ActivityLog\EntryContent\EntryContentManager;
+use Swis\Filament\ActivityLog\Livewire\ActivityLog;
+use Swis\Filament\ActivityLog\View\AttributesTable;
 
-class FilamentActivitylogServiceProvider extends PackageServiceProvider
+class FilamentActivityLogServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'filament-activitylog';
 
@@ -83,7 +83,7 @@ class FilamentActivitylogServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
-        Livewire::component('filament-activitylog', Activitylog::class);
+        Livewire::component('filament-activitylog', ActivityLog::class);
         Blade::component(AttributesTable::class, 'filament-activitylog::attributes-table');
     }
 }

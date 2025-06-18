@@ -1,10 +1,10 @@
 <?php
 
-namespace Swis\Filament\Activitylog\EntryContent\ViewResolver;
+namespace Swis\Filament\ActivityLog\EntryContent\ViewResolver;
 
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Activitylog\Contracts\Activity;
-use Swis\Filament\Activitylog\EntryContent\Contracts\ViewResolver;
+use Spatie\ActivityLog\Contracts\Activity;
+use Swis\Filament\ActivityLog\EntryContent\Contracts\ViewResolver;
 
 class EventViewResolver implements ViewResolver
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Swis\Filament\Activitylog\AttributeTable\Contracts;
+namespace Swis\Filament\ActivityLog\AttributeTable\Contracts;
 
 use Stringable;
-use Swis\Filament\Activitylog\AttributeTable\Builder;
+use Swis\Filament\ActivityLog\AttributeTable\Builder;
 
 interface ValueFormatter
 {

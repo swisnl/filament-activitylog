@@ -1,9 +1,9 @@
 <?php
 
-namespace Swis\Filament\Activitylog\AttributeTable\LabelProviders;
+namespace Swis\Filament\ActivityLog\AttributeTable\LabelProviders;
 
 use Illuminate\Support\Str;
-use Swis\Filament\Activitylog\AttributeTable\Contracts\LabelProvider;
+use Swis\Filament\ActivityLog\AttributeTable\Contracts\LabelProvider;
 
 class HeadlineProvider implements LabelProvider
 {

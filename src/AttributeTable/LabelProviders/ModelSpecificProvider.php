@@ -1,8 +1,8 @@
 <?php
 
-namespace Swis\Filament\Activitylog\AttributeTable\LabelProviders;
+namespace Swis\Filament\ActivityLog\AttributeTable\LabelProviders;
 
-use Swis\Filament\Activitylog\AttributeTable\Contracts\LabelProvider;
+use Swis\Filament\ActivityLog\AttributeTable\Contracts\LabelProvider;
 
 class ModelSpecificProvider implements LabelProvider
 {

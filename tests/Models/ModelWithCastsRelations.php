@@ -1,15 +1,15 @@
 <?php
 
-namespace Swis\Filament\Activitylog\Tests\Models;
+namespace Swis\Filament\ActivityLog\Tests\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Stringable;
-use Swis\Filament\Activitylog\AttributeTable\Builder;
-use Swis\Filament\Activitylog\AttributeTable\Contracts\SkipsAttributes;
-use Swis\Filament\Activitylog\AttributeTable\Contracts\ValueFormatter;
+use Swis\Filament\ActivityLog\AttributeTable\Builder;
+use Swis\Filament\ActivityLog\AttributeTable\Contracts\SkipsAttributes;
+use Swis\Filament\ActivityLog\AttributeTable\Contracts\ValueFormatter;
 
 /**
  * @property int $id
@@ -17,7 +17,7 @@ use Swis\Filament\Activitylog\AttributeTable\Contracts\ValueFormatter;
  */
 class ModelWithCastsRelations extends Model implements SkipsAttributes, ValueFormatter
 {
-    /** @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Swis\Filament\Activitylog\Tests\Database\Factories\ModelWithCastsRelationsFactory> */
+    /** @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Swis\Filament\ActivityLog\Tests\Database\Factories\ModelWithCastsRelationsFactory> */
     use HasFactory;
 
     protected $table = 'models_with_casts_relations';
@@ -47,7 +47,7 @@ class ModelWithCastsRelations extends Model implements SkipsAttributes, ValueFor
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\Swis\Filament\Activitylog\Tests\Models\ModelWithLabel, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\Swis\Filament\ActivityLog\Tests\Models\ModelWithLabel, $this>
      */
     public function modelWithLabel(): BelongsTo
     {
@@ -55,7 +55,7 @@ class ModelWithCastsRelations extends Model implements SkipsAttributes, ValueFor
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\Swis\Filament\Activitylog\Tests\Models\ModelWithLabel, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\Swis\Filament\ActivityLog\Tests\Models\ModelWithLabel, $this>
      */
     public function customBelongsToRelation(): BelongsTo
     {

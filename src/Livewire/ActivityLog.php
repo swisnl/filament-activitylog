@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\Filament\Activitylog\Livewire;
+namespace Swis\Filament\ActivityLog\Livewire;
 
 use Carbon\Carbon;
 use Filament\Actions;
@@ -16,13 +16,13 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
-use Spatie\Activitylog\ActivitylogServiceProvider;
-use Swis\Filament\Activitylog\EntryContent\EntryContent;
-use Swis\Filament\Activitylog\Facades\FilamentActivitylog;
+use Spatie\ActivityLog\ActivityLogServiceProvider;
+use Swis\Filament\ActivityLog\EntryContent\EntryContent;
+use Swis\Filament\ActivityLog\Facades\FilamentActivityLog;
 
 use function Filament\authorize;
 
-class Activitylog extends Component implements Forms\Contracts\HasForms, Tables\Contracts\HasTable
+class ActivityLog extends Component implements Forms\Contracts\HasForms, Tables\Contracts\HasTable
 {
     use Actions\Concerns\InteractsWithActions;
     use Forms\Concerns\InteractsWithForms;
@@ -71,7 +71,7 @@ class Activitylog extends Component implements Forms\Contracts\HasForms, Tables\
         }
 
         try {
-            return authorize('commentActivitylog', $this->record)->allowed();
+            return authorize('commentActivityLog', $this->record)->allowed();
         } catch (AuthorizationException $exception) {
             return $exception->toResponse()->allowed();
         }
@@ -79,7 +79,7 @@ class Activitylog extends Component implements Forms\Contracts\HasForms, Tables\
 
     public function table(Table $table): Table
     {
-        $modelClass = ActivitylogServiceProvider::determineActivityModel();
+        $modelClass = ActivityLogServiceProvider::determineActivityModel();
 
         return $table
             ->query(
@@ -95,7 +95,7 @@ class Activitylog extends Component implements Forms\Contracts\HasForms, Tables\
                                 return null;
                             }
 
-                            return FilamentActivitylog::attributeTableBuilder()->formatValue($state, 'causer', [], $modelClass);
+                            return FilamentActivityLog::attributeTableBuilder()->formatValue($state, 'causer', [], $modelClass);
                         })
                         ->weight(FontWeight::SemiBold),
                     Tables\Columns\TextColumn::make('created_at')

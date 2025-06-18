@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\Filament\Activitylog\AttributeTable\Concerns;
+namespace Swis\Filament\ActivityLog\AttributeTable\Concerns;
 
 trait SkipsHiddenAttributes
 {

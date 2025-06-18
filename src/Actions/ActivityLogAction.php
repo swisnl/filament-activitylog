@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\Filament\Activitylog\Actions;
+namespace Swis\Filament\ActivityLog\Actions;
 
 use Closure;
 use Filament\Actions\Action;
@@ -11,7 +11,7 @@ use Illuminate\View\View;
 
 use function Filament\authorize;
 
-class ActivitylogAction extends Action
+class ActivityLogAction extends Action
 {
     protected Closure | bool $enableComments = true;
 
@@ -48,7 +48,7 @@ class ActivitylogAction extends Action
         $this
             ->authorize(function ($record) {
                 try {
-                    return authorize('viewActivitylog', $record)->allowed();
+                    return authorize('viewActivityLog', $record)->allowed();
                 } catch (AuthorizationException $exception) {
                     return $exception->toResponse()->allowed();
                 }

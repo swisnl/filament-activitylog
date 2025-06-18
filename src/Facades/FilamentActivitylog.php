@@ -1,22 +1,22 @@
 <?php
 
-namespace Swis\Filament\Activitylog\Facades;
+namespace Swis\Filament\ActivityLog\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use Swis\Filament\Activitylog\FilamentActivitylogManager;
+use Swis\Filament\ActivityLog\FilamentActivityLogManager;
 
 /**
- * @method static \Swis\Filament\Activitylog\AttributeTable\Builder attributeTableBuilder()
- * @method static \Swis\Filament\Activitylog\EntryContent\EntryContentManager entryContentManager()
- * @method static void registerAttributeTableLabelProvider(\Closure | \Swis\Filament\Activitylog\AttributeTable\Contracts\LabelProvider $provider, int $priority = 0)
- * @method static void registerAttributeTableValueFormatter(\Closure | \Swis\Filament\Activitylog\AttributeTable\Contracts\ValueFormatter $formatter, int $priority = 0)
- * @method static void registerEntryContentViewResolver(\Closure | \Swis\Filament\Activitylog\EntryContent\Contracts\ViewResolver $resolver, int $priority = 0)
+ * @method static \Swis\Filament\ActivityLog\AttributeTable\Builder attributeTableBuilder()
+ * @method static \Swis\Filament\ActivityLog\EntryContent\EntryContentManager entryContentManager()
+ * @method static void registerAttributeTableLabelProvider(\Closure | \Swis\Filament\ActivityLog\AttributeTable\Contracts\LabelProvider $provider, int $priority = 0)
+ * @method static void registerAttributeTableValueFormatter(\Closure | \Swis\Filament\ActivityLog\AttributeTable\Contracts\ValueFormatter $formatter, int $priority = 0)
+ * @method static void registerEntryContentViewResolver(\Closure | \Swis\Filament\ActivityLog\EntryContent\Contracts\ViewResolver $resolver, int $priority = 0)
  * @method static void registerEntryContentEventViewResolver(string $event, string $view, int $priority = 0)
  */
-class FilamentActivitylog extends Facade
+class FilamentActivityLog extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return FilamentActivitylogManager::class;
+        return FilamentActivityLogManager::class;
     }
 }

@@ -39,13 +39,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Swis\\Filament\\Activitylog\\": "src/"
+            "Swis\\Filament\\ActivityLog\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Swis\\Filament\\Activitylog\\Tests\\": "tests/",
-            "Swis\\Filament\\Activitylog\\Tests\\Database\\Factories\\": "tests/database/factories/"
+            "Swis\\Filament\\ActivityLog\\Tests\\": "tests/",
+            "Swis\\Filament\\ActivityLog\\Tests\\Database\\Factories\\": "tests/database/factories/"
         }
     },
     "scripts": {
@@ -65,10 +65,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Swis\\Filament\\Activitylog\\FilamentActivitylogServiceProvider"
+              "FilamentActivityLogServiceProvider"
             ],
             "aliases": {
-                "FilamentActivitylog": "Swis\\Filament\\Activitylog\\Facades\\FilamentActivitylog"
+                "FilamentActivityLog": "Swis\\Filament\\ActivityLog\\Facades\\FilamentActivityLog"
             }
         }
     },

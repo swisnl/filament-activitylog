@@ -1,14 +1,14 @@
 <?php
 
-namespace Swis\Filament\Activitylog\AttributeTable\ValueFormatters;
+namespace Swis\Filament\ActivityLog\AttributeTable\ValueFormatters;
 
 use Carbon\CarbonImmutable;
 use DateTimeInterface;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Stringable;
-use Swis\Filament\Activitylog\AttributeTable\Builder;
-use Swis\Filament\Activitylog\AttributeTable\Contracts\ValueFormatter;
+use Swis\Filament\ActivityLog\AttributeTable\Builder;
+use Swis\Filament\ActivityLog\AttributeTable\Contracts\ValueFormatter;
 
 class DateTimeCastFormatter implements ValueFormatter
 {

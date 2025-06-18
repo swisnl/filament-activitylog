@@ -36,7 +36,7 @@ activity. The actions show a modal with the activity log entries for the record 
 
 ### Tables
 
-For tables add the `Swis\Filament\Activitylog\Tables\Actions\ActivitylogAction` to the actions in the resource table.
+For tables add the `Swis\Filament\ActivityLog\Tables\Actions\ActivityLogAction` to the actions in the resource table.
 
 ```php
 <?php
@@ -45,7 +45,7 @@ namespace App\Filament\Resources;
 
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
-use Swis\Filament\Activitylog\Tables\Actions\ActivitylogAction;
+use Swis\Filament\ActivityLog\Tables\Actions\ActivityLogAction;
 
 class MyResource extends Resource
 {
@@ -55,7 +55,7 @@ class MyResource extends Resource
             ...
             ->actions([
                 ...
-                ActivitylogAction::make(),
+                ActivityLogAction::make(),
                 ...
             ]);
     }
@@ -64,7 +64,7 @@ class MyResource extends Resource
 
 ### Pages
 
-For pages, use the `Swis\Filament\ActivityLog\Actions\ActivitylogAction`. The action can be added to the header actions
+For pages, use the `Swis\Filament\ActivityLog\Actions\ActivityLogAction`. The action can be added to the header actions
 of the page. The example shows how to add the action to the `EditRecord` page, but the same logic applies to the
 `ViewRecord` page, or other record pages.
 
@@ -75,7 +75,7 @@ namespace App\Filament\Resources\MyResource\Pages;
 
 use App\Filament\Resources\MyResource;
 use Filament\Resources\Pages\EditRecord;
-use Swis\Filament\ActivityLog\Actions\ActivitylogAction;
+use Swis\Filament\ActivityLog\Actions\ActivityLogAction;
 
 class EditContract extends EditRecord
 {
@@ -85,7 +85,7 @@ class EditContract extends EditRecord
     {
         return [
             ...
-            ActivitylogAction::make(),
+            ActivityLogAction::make(),
         ];
     }
 }
@@ -93,7 +93,7 @@ class EditContract extends EditRecord
 
 ## Access control
 
-By default, the actions use the `viewActivitylog` and `commentActivitylog` abilities on the model policy. If the policy
+By default, the actions use the `viewActivityLog` and `commentActivityLog` abilities on the model policy. If the policy
 doesn't exist or the method is not defined in the policy, the action is shown to everyone.
 
 ```php
@@ -106,12 +106,12 @@ use App\Models\User;
 
 class MyModelPolicy
 {
-    public function viewActivitylog(User $user, MyModel $myModel)
+    public function viewActivityLog(User $user, MyModel $myModel)
     {
         return $user->isAdmin();
     }
 
-    public function commentActivitylog(User $user, MyModel $myModel)
+    public function commentActivityLog(User $user, MyModel $myModel)
     {
         return $user->isAdmin();
     }
@@ -133,9 +133,9 @@ By default, there is support for activity log entries with the following events:
 If you need to support other events, or if you need to override the default view resolvers, you can add your own view
 resolvers. The view resolvers are called with the activity log entry. The view resolvers should return the name of the
 view to render (or `null` if the view resolver can't handle the entry). You can add your own view resolvers by
-calling the `FilamentActivitylog::registerEntryContentViewResolver` method. In most cases, you just want to map a 
+calling the `FilamentActivityLog::registerEntryContentViewResolver` method. In most cases, you just want to map a 
 specific event to a view. There is a helper method for this: 
-`FilamentActivitylog::registerEntryContentEventViewResolver`.
+`FilamentActivityLog::registerEntryContentEventViewResolver`.
 
 ```php
 <?php
@@ -143,13 +143,13 @@ specific event to a view. There is a helper method for this:
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Swis\Filament\Activitylog\Facades\FilamentActivitylog;
+use Swis\Filament\ActivityLog\Facades\FilamentActivityLog;
 
 class AppServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        FilamentActivitylog::registerEntryContentEventViewResolver('myevent', 'activitylog.entries.myevent');
+        FilamentActivityLog::registerEntryContentEventViewResolver('myevent', 'activitylog.entries.myevent');
     }
 }
 ```
@@ -168,7 +168,7 @@ provides some ways to do this. For most projects, you will need to do some custo
 In the activity log data, we only have the key of the attribute. To show a human-readable label, we need to map the key
 to a label. This is done using label providers. The default label provider simply runs the key through
 `Str::headline`. You can add your own label providers by registering them in the
-`FilamentActivitylog` facade.
+`FilamentActivityLog` facade.
 
 ```php
 <?php
@@ -177,13 +177,13 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Stringable;
-use Swis\Filament\Activitylog\Facades\FilamentActivitylog;
+use Swis\Filament\ActivityLog\Facades\FilamentActivityLog;
 
 class AppServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        FilamentActivitylog::registerAttributeTableLabelProvider(function ($key, $recordClass) {
+        FilamentActivityLog::registerAttributeTableLabelProvider(function ($key, $recordClass) {
             $instance = new $recordClass;
 
             $translationKey = $instance->getMorphClass().'.fields.'.$key.'.label';
@@ -204,7 +204,7 @@ The label provider is called with the key of the attribute and the class name of
 in your closure, so omit the parameters you don't need. The parameters are matched by name, not by order. So feel free
 to order them differently, but don't change the name.
 
-The `FilamentActivitylog::registerAttributeTableLabelProvider` method accepts a second parameter, which is the
+The `FilamentActivityLog::registerAttributeTableLabelProvider` method accepts a second parameter, which is the
 priority of the label provider. The default priority is 0. The higher the priority, the earlier the provider is called.
 The built-in label providers has a negative priority, so they are called after custom providers (unless you explicitly
 give them a lower priority).
@@ -218,7 +218,7 @@ overrides, you can register a label provider with a priority higher than 256, bu
 You can also choose to provide the labels from the model. This can be useful if you don't have structured translations
 for the labels, or if you want to provide the labels in a different way.
 
-You can do this by implementing the `\Swis\Filament\Activitylog\AttributeTableContracts\LabelProvider` interface.
+You can do this by implementing the `\Swis\Filament\ActivityLog\AttributeTableContracts\LabelProvider` interface.
 
 ```php
 <?php
@@ -226,7 +226,7 @@ You can do this by implementing the `\Swis\Filament\Activitylog\AttributeTableCo
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Swis\Filament\Activitylog\AttributeTable\Contracts\LabelProvider;
+use Swis\Filament\ActivityLog\AttributeTable\Contracts\LabelProvider;
 
 class MyModel extends Model implements LabelProvider
 {
@@ -243,7 +243,7 @@ class MyModel extends Model implements LabelProvider
 ### Values
 
 The values of the attributes are formatted using value formatters. You can add your own value formatters by registering
-them in the `FilamentActivitylog` facade.
+them in the `FilamentActivityLog` facade.
 
 ```php
 <?php
@@ -251,14 +251,14 @@ them in the `FilamentActivitylog` facade.
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Swis\Filament\Activitylog\AttributeTable\Builder;
-use Swis\Filament\Activitylog\Facades\FilamentActivitylog;
+use Swis\Filament\ActivityLog\AttributeTable\Builder;
+use Swis\Filament\ActivityLog\Facades\FilamentActivityLog;
 
 class AppServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        FilamentActivitylog::registerAttributeTableValueFormatter(function (Builder $builder, mixed $value, string $key, array $attributes, string $recordClass) {
+        FilamentActivityLog::registerAttributeTableValueFormatter(function (Builder $builder, mixed $value, string $key, array $attributes, string $recordClass) {
             // Implement custom value formatting logic here.
         });
     }
@@ -276,7 +276,7 @@ this, you convert `$value` to another object and call the formatter again with t
 relations. The relation value formatter recognizes the relation from the foreign key and finds the appropriate related
 model. This model is then passed to the builder again, so the builder can format the related model.
 
-The `FilamentActivitylog::registerAttributeTableValueFormatter` method accepts a second parameter, which is the
+The `FilamentActivityLog::registerAttributeTableValueFormatter` method accepts a second parameter, which is the
 priority of the formatter. The default priority is 0. The higher the priority, the earlier the formatter is called. All
 built-in formatters have a negative priority, so they are called after custom formatters (unless you explicitly give
 them a lower priority).
@@ -290,12 +290,12 @@ can register a formatter with a priority higher than 256, but that should be an 
 In rare cases you may need to format a specific attribute for a specific model differently than other values of the same
 type.
 
-In most cases you should prefer to use `FilamentActivitylog::registerAttributeTableValueFormatter` logic, and
+In most cases you should prefer to use `FilamentActivityLog::registerAttributeTableValueFormatter` logic, and
 match in the formatter on the type of the value, or casts of the model. If you really can't match based on this
 information and need to match on the `$key` and `$recordClass` parameter, the model specific overrides can be a simpler
 solution.
 
-You can do this by implementing the `\Swis\Filament\Activitylog\AttributeTable\Contracts\ValuesFormatter` interface.
+You can do this by implementing the `\Swis\Filament\ActivityLog\AttributeTable\Contracts\ValuesFormatter` interface.
 
 ```php
 <?php
@@ -303,8 +303,8 @@ You can do this by implementing the `\Swis\Filament\Activitylog\AttributeTable\C
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Swis\Filament\Activitylog\AttributeTable\Builder;
-use Swis\Filament\Activitylog\AttributeTable\Contracts\ValueFormatter;
+use Swis\Filament\ActivityLog\AttributeTable\Builder;
+use Swis\Filament\ActivityLog\AttributeTable\Contracts\ValueFormatter;
 
 class MyModel extends Model implements ValueFormatter
 {
@@ -325,7 +325,7 @@ into another object and format this.
 ### Attribute skipping
 
 In some cases, you may want to omit certain attributes in the attribute table. You can do this by implementing the
-`\Swis\Filament\Activitylog\AttributeTable\Contracts\SkipsAttributes` interface on the model.
+`\Swis\Filament\ActivityLog\AttributeTable\Contracts\SkipsAttributes` interface on the model.
 
 ```php
 <?php
@@ -333,7 +333,7 @@ In some cases, you may want to omit certain attributes in the attribute table. Y
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Swis\Filament\Activitylog\AttributeTable\Contracts\SkipsAttributes;
+use Swis\Filament\ActivityLog\AttributeTable\Contracts\SkipsAttributes;
 
 class MyModel extends Model implements SkipsAttributes
 {
@@ -352,8 +352,8 @@ which is provided by the package.
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Swis\Filament\Activitylog\AttributeTable\Concerns\SkipsHiddenAttributes;
-use Swis\Filament\Activitylog\AttributeTable\Contracts\SkipsAttributes;
+use Swis\Filament\ActivityLog\AttributeTable\Concerns\SkipsHiddenAttributes;
+use Swis\Filament\ActivityLog\AttributeTable\Contracts\SkipsAttributes;
 
 class User extends Authenticatable implements SkipsAttributes
 {

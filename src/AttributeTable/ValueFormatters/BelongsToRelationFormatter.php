@@ -1,14 +1,14 @@
 <?php
 
-namespace Swis\Filament\Activitylog\AttributeTable\ValueFormatters;
+namespace Swis\Filament\ActivityLog\AttributeTable\ValueFormatters;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Stringable;
-use Swis\Filament\Activitylog\AttributeTable\Builder;
-use Swis\Filament\Activitylog\AttributeTable\Contracts\ModelRelationFinder;
-use Swis\Filament\Activitylog\AttributeTable\Contracts\ValueFormatter;
+use Swis\Filament\ActivityLog\AttributeTable\Builder;
+use Swis\Filament\ActivityLog\AttributeTable\Contracts\ModelRelationFinder;
+use Swis\Filament\ActivityLog\AttributeTable\Contracts\ValueFormatter;
 
 class BelongsToRelationFormatter implements ValueFormatter
 {
