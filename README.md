@@ -361,6 +361,15 @@ class User extends Authenticatable implements SkipsAttributes
 }
 ```
 
+## Translations
+
+This package contains language files for English and Dutch. We cannot reliably maintain any other languages, so we will
+not accept Pull Requests that add more languages. Below is a list of community maintained language files for other
+languages. If you made a language file for another language, feel free to upload it into a [Github Gist](https://gist.github.com/)
+and open a Pull Request to add it to the list below.
+
+* [German](https://gist.github.com/Arne1303/0144626cf89b1d93bbc427c8fe277a9a)
+
 ## Testing
 
 ```bash
