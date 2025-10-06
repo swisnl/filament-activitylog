@@ -4,7 +4,7 @@ namespace Swis\Filament\Activitylog\AttributeTable\LabelProviders;
 
 use Swis\Filament\Activitylog\AttributeTable\Contracts\LabelProvider;
 
-class ModelSpecificProvider implements LabelProvider
+class ModelSpecificProvider extends BaseLabelProvider
 {
     public function getAttributeTableLabel(string $key, string $recordClass): ?string
     {

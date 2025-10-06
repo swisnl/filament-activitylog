@@ -2,13 +2,13 @@
 
 namespace Swis\Filament\Activitylog\AttributeTable\ValueFormatters;
 
+use Illuminate\Contracts\Support\Htmlable;
 use Stringable;
 use Swis\Filament\Activitylog\AttributeTable\Builder;
-use Swis\Filament\Activitylog\AttributeTable\Contracts\ValueFormatter;
 
-class NullFormatter implements ValueFormatter
+class NullFormatter extends BaseValueFormatter
 {
-    public function formatAttributeTableValue(Builder $builder, mixed $value, string $key, array $attributes, string $recordClass): Stringable | string | null
+    public function formatAttributeTableValue(Builder $builder, mixed $value, string $key, array $attributes, string $recordClass): Htmlable | Stringable | string | null
     {
         if (! is_null($value)) {
             return null;

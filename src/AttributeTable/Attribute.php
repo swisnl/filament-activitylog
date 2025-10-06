@@ -2,6 +2,7 @@
 
 namespace Swis\Filament\Activitylog\AttributeTable;
 
+use Illuminate\Contracts\Support\Htmlable;
 use Stringable;
 
 /** @phpstan-consistent-constructor */
@@ -9,26 +10,20 @@ class Attribute
 {
     protected string $key;
 
-    /**
-     * @var string|Stringable
-     */
-    protected $value;
+    protected string | Htmlable | Stringable $value;
 
-    /**
-     * @var string|Stringable|null
-     */
-    protected $oldValue = null;
+    protected null | string | Htmlable | Stringable $oldValue = null;
 
     protected string $label;
 
-    public function __construct(string $key, string | Stringable $value, string $label)
+    public function __construct(string $key, string | Htmlable | Stringable $value, string $label)
     {
         $this->key = $key;
         $this->value = $value;
         $this->label = $label;
     }
 
-    public static function make(string $key, string | Stringable $value, string $label): static
+    public static function make(string $key, string | Htmlable | Stringable $value, string $label): static
     {
         return new static($key, $value, $label);
     }
@@ -38,27 +33,20 @@ class Attribute
         return $this->key;
     }
 
-    /**
-     * @return string|Stringable
-     */
-    public function getValue(): mixed
+    public function getValue(): string | Htmlable | Stringable
     {
         return $this->value;
     }
 
-    /**
-     * @return string|Stringable|null
-     */
-    public function getOldValue()
+    public function getOldValue(): null | string | Htmlable | Stringable
     {
         return $this->oldValue;
     }
 
     /**
-     * @param  string|Stringable  $oldValue
      * @return $this
      */
-    public function withOldValue($oldValue): static
+    public function withOldValue(null | string | Htmlable | Stringable $oldValue): static
     {
         $this->oldValue = $oldValue;
 

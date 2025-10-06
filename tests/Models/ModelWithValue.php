@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\HtmlString;
 use Stringable;
 use Swis\Filament\Activitylog\AttributeTable\Contracts\HasValue;
+use Swis\Filament\Activitylog\Tests\Database\Factories\ModelWithValueFactory;
 
 /**
  * @property int $id
@@ -14,7 +15,7 @@ use Swis\Filament\Activitylog\AttributeTable\Contracts\HasValue;
  */
 class ModelWithValue extends Model implements HasValue
 {
-    /** @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Swis\Filament\Activitylog\Tests\Database\Factories\ModelWithValueFactory> */
+    /** @use HasFactory<ModelWithValueFactory> */
     use HasFactory;
 
     protected $table = 'models_with_value';

@@ -10,6 +10,7 @@ use Stringable;
 use Swis\Filament\Activitylog\AttributeTable\Builder;
 use Swis\Filament\Activitylog\AttributeTable\Contracts\SkipsAttributes;
 use Swis\Filament\Activitylog\AttributeTable\Contracts\ValueFormatter;
+use Swis\Filament\Activitylog\Tests\Database\Factories\ModelWithCastsRelationsFactory;
 
 /**
  * @property int $id
@@ -17,7 +18,7 @@ use Swis\Filament\Activitylog\AttributeTable\Contracts\ValueFormatter;
  */
 class ModelWithCastsRelations extends Model implements SkipsAttributes, ValueFormatter
 {
-    /** @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Swis\Filament\Activitylog\Tests\Database\Factories\ModelWithCastsRelationsFactory> */
+    /** @use HasFactory<ModelWithCastsRelationsFactory> */
     use HasFactory;
 
     protected $table = 'models_with_casts_relations';
@@ -47,7 +48,7 @@ class ModelWithCastsRelations extends Model implements SkipsAttributes, ValueFor
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\Swis\Filament\Activitylog\Tests\Models\ModelWithLabel, $this>
+     * @return BelongsTo<ModelWithLabel, $this>
      */
     public function modelWithLabel(): BelongsTo
     {
@@ -55,7 +56,7 @@ class ModelWithCastsRelations extends Model implements SkipsAttributes, ValueFor
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\Swis\Filament\Activitylog\Tests\Models\ModelWithLabel, $this>
+     * @return BelongsTo<ModelWithLabel, $this>
      */
     public function customBelongsToRelation(): BelongsTo
     {
@@ -63,7 +64,7 @@ class ModelWithCastsRelations extends Model implements SkipsAttributes, ValueFor
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo<\Illuminate\Database\Eloquent\Model, $this>
+     * @return MorphTo<Model, $this>
      */
     public function morphedModel(): MorphTo
     {
@@ -71,7 +72,7 @@ class ModelWithCastsRelations extends Model implements SkipsAttributes, ValueFor
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo<\Illuminate\Database\Eloquent\Model, $this>
+     * @return MorphTo<Model, $this>
      */
     public function customMorphToRelation(): MorphTo
     {

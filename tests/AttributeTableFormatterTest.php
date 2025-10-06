@@ -1,6 +1,8 @@
 <?php
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
+use Swis\Filament\Activitylog\AttributeTable\Attribute;
 use Swis\Filament\Activitylog\AttributeTable\Builder;
 use Swis\Filament\Activitylog\Tests\Models\ModelWithCastsRelations;
 use Swis\Filament\Activitylog\Tests\Models\ModelWithLabel;
@@ -15,7 +17,7 @@ it('formats with model specific overrides', function () {
 it('formats object with HasAttributeTableValue', function () {
     $obj = ModelWithValue::factory()->create(['name' => 'foo']);
 
-    /** @var \Illuminate\Support\HtmlString $value */
+    /** @var HtmlString $value */
     $value = app(Builder::class)->formatValue($obj, 'property', [], ModelWithCastsRelations::class);
 
     expect($value->toHtml())->toBe('<strong>foo</strong>');
@@ -165,9 +167,9 @@ it('builds attributes', function () {
 
     $attributes = app(Builder::class)->buildAttributes(ModelWithCastsRelations::class, $newAttributes, $oldAttributes);
 
-    expect($attributes)->toBeInstanceOf(\Illuminate\Support\Collection::class)
+    expect($attributes)->toBeInstanceOf(Collection::class)
         ->and($attributes->count())->toBe(1)
-        ->and($attributes->first())->toEqual(\Swis\Filament\Activitylog\AttributeTable\Attribute::make('property', 'foo', 'Property')->withOldValue('bar'));
+        ->and($attributes->first())->toEqual(Attribute::make('property', 'foo', 'Property')->withOldValue('bar'));
 });
 
 it('skips attributes', function () {
@@ -183,7 +185,7 @@ it('skips attributes', function () {
 
     $attributes = app(Builder::class)->buildAttributes(ModelWithCastsRelations::class, $newAttributes, $oldAttributes);
 
-    expect($attributes)->toBeInstanceOf(\Illuminate\Support\Collection::class)
+    expect($attributes)->toBeInstanceOf(Collection::class)
         ->and($attributes->count())->toBe(1)
         ->and($attributes->first()?->getKey())->toBe('property');
 });

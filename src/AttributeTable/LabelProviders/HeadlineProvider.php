@@ -3,9 +3,8 @@
 namespace Swis\Filament\Activitylog\AttributeTable\LabelProviders;
 
 use Illuminate\Support\Str;
-use Swis\Filament\Activitylog\AttributeTable\Contracts\LabelProvider;
 
-class HeadlineProvider implements LabelProvider
+class HeadlineProvider extends BaseLabelProvider
 {
     public function getAttributeTableLabel(string $key, string $recordClass): ?string
     {

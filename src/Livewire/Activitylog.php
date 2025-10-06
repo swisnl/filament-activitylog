@@ -3,13 +3,18 @@
 namespace Swis\Filament\Activitylog\Livewire;
 
 use Carbon\Carbon;
-use Filament\Actions;
+use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Facades\Filament;
-use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Pages;
+use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Pages\Concerns\InteractsWithFormActions;
+use Filament\Schemas\Schema;
 use Filament\Support\Enums\FontWeight;
-use Filament\Tables;
+use Filament\Tables\Columns\Layout\Stack;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\View;
@@ -22,12 +27,12 @@ use Swis\Filament\Activitylog\Facades\FilamentActivitylog;
 
 use function Filament\authorize;
 
-class Activitylog extends Component implements Forms\Contracts\HasForms, Tables\Contracts\HasTable
+class Activitylog extends Component implements HasForms, HasTable
 {
-    use Actions\Concerns\InteractsWithActions;
-    use Forms\Concerns\InteractsWithForms;
-    use Pages\Concerns\InteractsWithFormActions;
-    use Tables\Concerns\InteractsWithTable;
+    use InteractsWithActions;
+    use InteractsWithFormActions;
+    use InteractsWithForms;
+    use InteractsWithTable;
 
     #[Locked]
     public Model $record;
@@ -37,10 +42,10 @@ class Activitylog extends Component implements Forms\Contracts\HasForms, Tables\
 
     public string $comment = '';
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form->schema([
-            Forms\Components\MarkdownEditor::make('comment')
+        return $schema->components([
+            MarkdownEditor::make('comment')
                 ->label(__('filament-activitylog::activitylog.form.fields.comment.label'))
                 ->helperText(__('filament-activitylog::activitylog.form.fields.comment.helper_text')),
         ]);
@@ -88,8 +93,8 @@ class Activitylog extends Component implements Forms\Contracts\HasForms, Tables\
                     ->with(['subject', 'causer'])
             )
             ->columns([
-                Tables\Columns\Layout\Stack::make([
-                    Tables\Columns\TextColumn::make('causer')
+                Stack::make([
+                    TextColumn::make('causer')
                         ->formatStateUsing(function ($state) use ($modelClass) {
                             if ($state === null) {
                                 return null;
@@ -98,11 +103,15 @@ class Activitylog extends Component implements Forms\Contracts\HasForms, Tables\
                             return FilamentActivitylog::attributeTableBuilder()->formatValue($state, 'causer', [], $modelClass);
                         })
                         ->weight(FontWeight::SemiBold),
-                    Tables\Columns\TextColumn::make('created_at')
+                    TextColumn::make('created_at')
                         ->since()
                         ->inline()
-                        ->tooltip(function ($state) {
-                            return Carbon::parse($state)->format(Table::$defaultDateTimeDisplayFormat);
+                        ->tooltip(function ($state, Table $table) {
+                            if (! is_string($table->getDefaultDateTimeDisplayFormat())) {
+                                return null;
+                            }
+
+                            return Carbon::parse($state)->format($table->getDefaultDateTimeDisplayFormat());
                         })
                         ->color('gray')
                         ->sortable(),
