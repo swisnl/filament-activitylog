@@ -6,6 +6,10 @@ All notable changes to `filament-activitylog` will be documented in this file.
 
 - Nothing
 
+## [2.0.0] - 2026-04-14
+
+- Support Filament 4
+
 ## [1.0.1] - 2025-06-13
 
 - Fixed bug in display of entries when logging of model attributes is disabled [#2](https://github.com/swisnl/filament-activitylog/issues/2).
