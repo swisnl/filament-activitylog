@@ -2,15 +2,15 @@
 
 namespace Swis\Filament\Activitylog\AttributeTable\ValueFormatters;
 
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Stringable;
 use Swis\Filament\Activitylog\AttributeTable\Builder;
 use Swis\Filament\Activitylog\AttributeTable\Contracts\ModelRelationFinder;
-use Swis\Filament\Activitylog\AttributeTable\Contracts\ValueFormatter;
 
-class BelongsToRelationFormatter implements ValueFormatter
+class BelongsToRelationFormatter extends BaseValueFormatter
 {
     protected ModelRelationFinder $modelRelationFinder;
 
@@ -19,7 +19,7 @@ class BelongsToRelationFormatter implements ValueFormatter
         $this->modelRelationFinder = $modelRelationFinder;
     }
 
-    public function formatAttributeTableValue(Builder $builder, mixed $value, string $key, array $attributes, string $recordClass): Stringable | string | null
+    public function formatAttributeTableValue(Builder $builder, mixed $value, string $key, array $attributes, string $recordClass): Htmlable | Stringable | string | null
     {
         if (empty($value) || ! is_scalar($value)) {
             return null;

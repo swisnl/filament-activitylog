@@ -6,14 +6,14 @@ use Illuminate\Contracts\Support\Htmlable;
 use Stringable;
 use Swis\Filament\Activitylog\AttributeTable\Builder;
 
-class EmptyFormatter extends BaseValueFormatter
+class HtmlableFormatter extends BaseValueFormatter
 {
     public function formatAttributeTableValue(Builder $builder, mixed $value, string $key, array $attributes, string $recordClass): Htmlable | Stringable | string | null
     {
-        if ($value !== '') {
+        if (! $value instanceof Htmlable) {
             return null;
         }
 
-        return __('filament-activitylog::activitylog.attributes_table.values.empty');
+        return $value;
     }
 }

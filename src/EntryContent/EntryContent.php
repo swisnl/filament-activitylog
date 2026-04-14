@@ -2,9 +2,11 @@
 
 namespace Swis\Filament\Activitylog\EntryContent;
 
+use Exception;
 use Filament\Tables\Columns\Layout\Component;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\ComponentAttributeBag;
+use Spatie\Activitylog\Contracts\Activity;
 
 class EntryContent extends Component
 {
@@ -26,6 +28,10 @@ class EntryContent extends Component
     public function getView(): string
     {
         $record = $this->getRecord();
+
+        if (! $record instanceof Activity) {
+            throw new Exception('Record should be an instance of ' . Activity::class);
+        }
 
         return $this->manager->resolveView($record);
     }

@@ -5,7 +5,6 @@ namespace Swis\Filament\Activitylog\EntryContent;
 use Closure;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
-use InvalidArgumentException;
 use Spatie\Activitylog\Contracts\Activity;
 use Swis\Filament\Activitylog\EntryContent\Contracts\ViewResolver;
 use Swis\Filament\Activitylog\EntryContent\ViewResolver\EventViewResolver;
@@ -13,12 +12,12 @@ use Swis\Filament\Activitylog\EntryContent\ViewResolver\EventViewResolver;
 class EntryContentManager
 {
     /**
-     * @var array<int, array<array-key, \Closure|\Swis\Filament\Activitylog\EntryContent\Contracts\ViewResolver>>
+     * @var array<int, array<array-key, Closure|ViewResolver>>
      */
     protected array $viewResolvers = [];
 
     /**
-     * @var array<array-key, \Closure|\Swis\Filament\Activitylog\EntryContent\Contracts\ViewResolver>
+     * @var array<array-key, Closure|ViewResolver>
      */
     protected ?array $sortedViewResolvers = null;
 
@@ -53,7 +52,7 @@ class EntryContentManager
     /**
      * Get the registered value formatters in order of priority.
      *
-     * @return array<array-key, \Closure|\Swis\Filament\Activitylog\EntryContent\Contracts\ViewResolver>
+     * @return array<array-key, Closure|ViewResolver>
      */
     protected function getSortedViewResolvers(): array
     {
@@ -75,7 +74,7 @@ class EntryContentManager
     /**
      * Execute a view resolver.
      */
-    protected function executeViewResolver(Closure | ViewResolver $resolver, Activity & Model $activity): ?string
+    protected function executeViewResolver(Closure | ViewResolver $resolver, Activity $activity): ?string
     {
         if ($resolver instanceof ViewResolver) {
             return $resolver->resolveActivityView($activity);
@@ -89,12 +88,8 @@ class EntryContentManager
         return $result;
     }
 
-    public function resolveView(?Model $activity): string
+    public function resolveView(Activity $activity): string
     {
-        if (! $activity instanceof Activity) {
-            throw new InvalidArgumentException('The activity must be an instance of ' . Activity::class);
-        }
-
         foreach ($this->getSortedViewResolvers() as $resolver) {
             if ($view = $this->executeViewResolver($resolver, $activity)) {
                 return $view;

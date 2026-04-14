@@ -42,31 +42,35 @@ class FilamentActivitylogServiceProvider extends PackageServiceProvider
 
         app()->afterResolving(AttributeTableBuilder::class, function (AttributeTableBuilder $builder) {
             // Model specific value formatters
-            $builder->registerValueFormatter(app(ValueFormatters\ModelSpecificFormatter::class), 256);
+            $builder->registerValueFormatter(ValueFormatters\ModelSpecificFormatter::make(), 256);
 
             // Formatter for specific interfaces and objects
-            $builder->registerValueFormatter(app(ValueFormatters\HasValueFormatter::class), -10);
-            $builder->registerValueFormatter(app(ValueFormatters\HasLabelFormatter::class), -10);
-            $builder->registerValueFormatter(app(ValueFormatters\ModelFormatter::class), -10);
+            $builder->registerValueFormatter(ValueFormatters\HasValueFormatter::make(), -10);
+            $builder->registerValueFormatter(ValueFormatters\HasLabelFormatter::make(), -10);
+            $builder->registerValueFormatter(ValueFormatters\ModelFormatter::make(), -10);
 
             // Formatters for casts and relations
-            $builder->registerValueFormatter(app(ValueFormatters\DateCastFormatter::class), -25);
-            $builder->registerValueFormatter(app(ValueFormatters\DateTimeCastFormatter::class), -25);
-            $builder->registerValueFormatter(app(ValueFormatters\BelongsToRelationFormatter::class), -25);
+            $builder->registerValueFormatter(ValueFormatters\DateCastFormatter::make(), -25);
+            $builder->registerValueFormatter(ValueFormatters\DateTimeCastFormatter::make(), -25);
+            $builder->registerValueFormatter(ValueFormatters\BelongsToRelationFormatter::make(), -25);
+
+            // Formatters for generic interfaces
+            $builder->registerValueFormatter(ValueFormatters\HtmlableFormatter::make(), -49);
+            $builder->registerValueFormatter(ValueFormatters\StringableFormatter::make(), -50);
 
             // Simple formatters for scalar values
-            $builder->registerValueFormatter(app(ValueFormatters\NullFormatter::class), -50);
-            $builder->registerValueFormatter(app(ValueFormatters\BoolFormatter::class), -50);
-            $builder->registerValueFormatter(app(ValueFormatters\EmptyFormatter::class), -50);
-            $builder->registerValueFormatter(app(ValueFormatters\ScalarFormatter::class), -50);
-            $builder->registerValueFormatter(app(ValueFormatters\StringableFormatter::class), -50);
+            $builder->registerValueFormatter(ValueFormatters\NullFormatter::make(), -75);
+            $builder->registerValueFormatter(ValueFormatters\BoolFormatter::make(), -75);
+            $builder->registerValueFormatter(ValueFormatters\EmptyFormatter::make(), -75);
+            $builder->registerValueFormatter(ValueFormatters\ScalarFormatter::make(), -75);
+            $builder->registerValueFormatter(ValueFormatters\StringableFormatter::make(), -75);
 
             // Fallback formatters for objects and arrays
-            $builder->registerValueFormatter(app(ValueFormatters\JsonFormatter::class), -100);
+            $builder->registerValueFormatter(ValueFormatters\JsonFormatter::make(), -100);
 
             // Label providers
-            $builder->registerLabelProvider(app(LabelProviders\ModelSpecificProvider::class), 256);
-            $builder->registerLabelProvider(app(LabelProviders\HeadlineProvider::class), -100);
+            $builder->registerLabelProvider(LabelProviders\ModelSpecificProvider::make(), 256);
+            $builder->registerLabelProvider(LabelProviders\HeadlineProvider::make(), -100);
         });
 
         app()->afterResolving(EntryContentManager::class, function (EntryContentManager $manager) {

@@ -18,9 +18,9 @@ class EventViewResolver implements ViewResolver
         $this->view = $view;
     }
 
-    public function resolveActivityView(Model & Activity $activity): ?string
+    public function resolveActivityView(Activity $activity): ?string
     {
-        if (isset($activity->event) && $activity->event === $this->event) {
+        if ($activity instanceof Model && isset($activity->event) && $activity->event === $this->event) {
             return $this->view;
         }
 

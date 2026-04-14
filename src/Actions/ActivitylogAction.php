@@ -4,7 +4,7 @@ namespace Swis\Filament\Activitylog\Actions;
 
 use Closure;
 use Filament\Actions\Action;
-use Filament\Support\Enums\MaxWidth;
+use Filament\Support\Enums\Width;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\View\View;
@@ -61,7 +61,7 @@ class ActivitylogAction extends Action
                 'enableComments' => $this->getEnableComments(),
             ]))
             ->modalHeading(__('filament-activitylog::activitylog.action.heading'))
-            ->modalWidth(MaxWidth::ScreenSmall)
+            ->modalWidth(Width::ScreenSmall)
             ->modalSubmitAction(false)
             ->modalCancelAction(false);
     }

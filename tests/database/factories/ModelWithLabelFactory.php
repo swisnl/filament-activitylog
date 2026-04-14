@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Swis\Filament\Activitylog\Tests\Models\ModelWithLabel;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\Swis\Filament\Activitylog\Tests\Models\ModelWithLabel>
+ * @extends Factory<ModelWithLabel>
  */
 class ModelWithLabelFactory extends Factory
 {

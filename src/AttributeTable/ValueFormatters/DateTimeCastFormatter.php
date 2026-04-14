@@ -3,16 +3,30 @@
 namespace Swis\Filament\Activitylog\AttributeTable\ValueFormatters;
 
 use Carbon\CarbonImmutable;
+use Closure;
 use DateTimeInterface;
-use Filament\Tables\Table;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 use Stringable;
 use Swis\Filament\Activitylog\AttributeTable\Builder;
-use Swis\Filament\Activitylog\AttributeTable\Contracts\ValueFormatter;
 
-class DateTimeCastFormatter implements ValueFormatter
+class DateTimeCastFormatter extends BaseValueFormatter
 {
-    public function formatAttributeTableValue(Builder $builder, mixed $value, string $key, array $attributes, string $recordClass): Stringable | string | null
+    protected string | Closure $dateTimeDisplayFormat = 'M j, Y H:i:s';
+
+    public function dateTimeDisplayFormat(string | Closure $format): static
+    {
+        $this->dateTimeDisplayFormat = $format;
+
+        return $this;
+    }
+
+    public function getDateTimeDisplayFormat(): string
+    {
+        return $this->evaluate($this->dateTimeDisplayFormat);
+    }
+
+    public function formatAttributeTableValue(Builder $builder, mixed $value, string $key, array $attributes, string $recordClass): Htmlable | Stringable | string | null
     {
         if (! is_a($recordClass, Model::class, true)) {
             return null;
@@ -29,11 +43,11 @@ class DateTimeCastFormatter implements ValueFormatter
         }
 
         if ($value instanceof DateTimeInterface) {
-            return CarbonImmutable::instance($value)->format(Table::$defaultDateTimeDisplayFormat);
+            return CarbonImmutable::instance($value)->format($this->getDateTimeDisplayFormat());
         }
 
         if (is_string($value) || is_int($value) || is_float($value)) {
-            return CarbonImmutable::parse($value)->format(Table::$defaultDateTimeDisplayFormat);
+            return CarbonImmutable::parse($value)->format($this->getDateTimeDisplayFormat());
         }
 
         return null;

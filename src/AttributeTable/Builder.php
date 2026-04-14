@@ -3,6 +3,7 @@
 namespace Swis\Filament\Activitylog\AttributeTable;
 
 use Closure;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Collection;
 use Stringable;
 use Swis\Filament\Activitylog\AttributeTable\Contracts\LabelProvider;
@@ -13,22 +14,22 @@ use Swis\Filament\Activitylog\AttributeTable\Contracts\ValueFormatter;
 class Builder
 {
     /**
-     * @var array<int, array<array-key, \Closure|\Swis\Filament\Activitylog\AttributeTable\Contracts\ValueFormatter>>
+     * @var array<int, array<array-key, Closure|ValueFormatter>>
      */
     protected array $valueFormatters = [];
 
     /**
-     * @var array<array-key, \Closure|\Swis\Filament\Activitylog\AttributeTable\Contracts\ValueFormatter>|null
+     * @var array<array-key, Closure|ValueFormatter>|null
      */
     protected ?array $sortedValueFormatters = null;
 
     /**
-     * @var array<int, array<array-key, \Closure|\Swis\Filament\Activitylog\AttributeTable\Contracts\LabelProvider>>
+     * @var array<int, array<array-key, Closure|LabelProvider>>
      */
     protected array $labelProviders = [];
 
     /**
-     * @var array<array-key, \Closure|\Swis\Filament\Activitylog\AttributeTable\Contracts\LabelProvider>|null
+     * @var array<array-key, Closure|LabelProvider>|null
      */
     protected ?array $sortedLabelProviders = null;
 
@@ -74,7 +75,7 @@ class Builder
     /**
      * Get the registered value formatters in order of priority.
      *
-     * @return array<array-key, \Closure|\Swis\Filament\Activitylog\AttributeTable\Contracts\ValueFormatter>
+     * @return array<array-key, Closure|ValueFormatter>
      */
     protected function getSortedValueFormatters(): array
     {
@@ -98,13 +99,13 @@ class Builder
      *
      * @param  array<string, mixed>  $attributes
      */
-    protected function executeValueFormatter(Closure | ValueFormatter $valueFormatter, mixed $value, string $key, array $attributes, string $recordClass): null | Stringable | string
+    protected function executeValueFormatter(Closure | ValueFormatter $valueFormatter, mixed $value, string $key, array $attributes, string $recordClass): null | Htmlable | Stringable | string
     {
         if ($valueFormatter instanceof ValueFormatter) {
             return $valueFormatter->formatAttributeTableValue($this, $value, $key, $attributes, $recordClass);
         }
 
-        /** @var null | Stringable | string $result */
+        /** @var null | Htmlable | Stringable | string $result */
         $result = app()->call($valueFormatter, [
             'builder' => $this,
             'value' => $value,
@@ -124,7 +125,7 @@ class Builder
      *
      * @param  array<string, mixed>  $attributes
      */
-    public function formatValue(mixed $value, string $key, array $attributes, string $recordClass): Stringable | string
+    public function formatValue(mixed $value, string $key, array $attributes, string $recordClass): Htmlable | Stringable | string
     {
         foreach ($this->getSortedValueFormatters() as $formatter) {
             $formattedValue = $this->executeValueFormatter($formatter, $value, $key, $attributes, $recordClass);
@@ -168,7 +169,7 @@ class Builder
     /**
      * Get the registered label providers in order of priority.
      *
-     * @return array<array-key, \Closure|\Swis\Filament\Activitylog\AttributeTable\Contracts\LabelProvider>
+     * @return array<array-key, Closure|LabelProvider>
      */
     protected function getSortedLabelProviders(): array
     {
@@ -228,7 +229,7 @@ class Builder
      *
      * @param  array<string, mixed>  $newAttributes
      * @param  ?array<string, mixed>  $oldAttributes
-     * @return \Illuminate\Support\Collection<string, Attribute>
+     * @return Collection<string, Attribute>
      */
     public function buildAttributes(string $recordClass, array $newAttributes, ?array $oldAttributes = null): Collection
     {
