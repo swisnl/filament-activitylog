@@ -18,6 +18,13 @@ provides a way to add comments as activity log entries.
 ![Screenshot of Filament Demo Categories pages with Activity Log overlay modal](https://github.com/user-attachments/assets/b757818a-4d57-4baa-85b2-ab0cbc6a1144)
 
 
+## Version Compatibility
+
+| Plugin Version | Filament Version | PHP Version |
+|----------------|------------------|-------------|
+| 2.x            | 4.x              | 8.2+        |
+| 1.x            | 3.x              | 8.2+        |
+
 ## Installation
 
 You can install the package via composer:
@@ -31,12 +38,12 @@ this will also install that package. Follow the [installation instructions of sp
 
 ## Usage
 
-The package provides two actions, one for tables, and one for pages. Add the action for the resources that have
-activity. The actions show a modal with the activity log entries for the record and a form to add a comment.
+The package provides an action. Add the action for the resources that have activity. The actions show a modal with the
+activity log entries for the record and a form to add a comment.
 
 ### Tables
 
-For tables add the `Swis\Filament\Activitylog\Tables\Actions\ActivitylogAction` to the actions in the resource table.
+For tables add the `Swis\Filament\Activitylog\Actions\ActivitylogAction` to the actions in the resource table.
 
 ```php
 <?php
@@ -45,7 +52,7 @@ namespace App\Filament\Resources;
 
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
-use Swis\Filament\Activitylog\Tables\Actions\ActivitylogAction;
+use Swis\Filament\Activitylog\Actions\ActivitylogAction;
 
 class MyResource extends Resource
 {
@@ -64,9 +71,9 @@ class MyResource extends Resource
 
 ### Pages
 
-For pages, use the `Swis\Filament\ActivityLog\Actions\ActivitylogAction`. The action can be added to the header actions
-of the page. The example shows how to add the action to the `EditRecord` page, but the same logic applies to the
-`ViewRecord` page, or other record pages.
+For pages, add the `Swis\Filament\ActivityLog\Actions\ActivitylogAction` to the header actions of the page. The example
+shows how to add the action to the `EditRecord` page, but the same logic applies to the `ViewRecord` page, or other 
+record pages.
 
 ```php
 <?php
@@ -266,9 +273,10 @@ class AppServiceProvider extends ServiceProvider
 ```
 
 In your custom logic, you need to return null if you can't format the value. Return a string or a `Stringable` object if
-you can format the value. The attribute table supports HTML, so you can return an `Illuminate\Support\HtmlString` object
-if you want to return HTML. All parameters are optional in your closure, so omit the parameters you don't need. The
-parameters are matched by name, not by order. So feel free to order them differently, but don't change the name.
+you can format the value. The attribute table supports HTML, so you can return an 
+`Illuminate\Contracts\Support\Htmlable` object if you want to return HTML. All parameters are optional in your closure,
+so omit the parameters you don't need. The parameters are matched by name, not by order. So feel free to order them 
+differently, but don't change the name.
 
 Because you get the builder as a parameter, you can use the values formatters from the builder recursively. If you do 
 this, you convert `$value` to another object and call the formatter again with the new object, using
@@ -302,13 +310,15 @@ You can do this by implementing the `\Swis\Filament\Activitylog\AttributeTable\C
 
 namespace App\Models;
 
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
+use Stringable;
 use Swis\Filament\Activitylog\AttributeTable\Builder;
 use Swis\Filament\Activitylog\AttributeTable\Contracts\ValueFormatter;
 
 class MyModel extends Model implements ValueFormatter
 {
-    public function formatAttributeTableValue(Builder $builder, mixed $value, string $key, array $attributes, string $recordClass): Stringable|string|null
+    public function formatAttributeTableValue(Builder $builder, mixed $value, string $key, array $attributes, string $recordClass): Htmlable | Stringable | string | null
     {
         if ($key === 'myproperty') {
             return 'This is a custom formatted value';
@@ -365,8 +375,8 @@ class User extends Authenticatable implements SkipsAttributes
 
 This package contains language files for English and Dutch. We cannot reliably maintain any other languages, so we will
 not accept Pull Requests that add more languages. Below is a list of community maintained language files for other
-languages. If you made a language file for another language, feel free to upload it into a [Github Gist](https://gist.github.com/)
-and open a Pull Request to add it to the list below.
+languages. If you made a language file for another language, feel free to upload it into a 
+[Github Gist](https://gist.github.com/) and open a Pull Request to add it to the list below.
 
 * [German](https://gist.github.com/Arne1303/0144626cf89b1d93bbc427c8fe277a9a)
 
