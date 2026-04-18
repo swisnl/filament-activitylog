@@ -13,20 +13,17 @@ jobs:
       fail-fast: true
       matrix:
         os: [ubuntu-latest, windows-latest]
-        php: [8.2, 8.3, 8.4]
-        laravel: [11.*, 12.*]
+        php: [8.3, 8.4]
+        laravel: [12.*, 13.*]
         stability: [prefer-lowest, prefer-stable]
-        exclude:
-          - php: 8.2
-            laravel: 12.*
         include:
-          - laravel: 11.*
-            testbench: 9.*
-            phpstan: 1.*
-            larastan: 2.*
-            carbon: 2.*
           - laravel: 12.*
             testbench: 10.*
+            phpstan: 2.*
+            larastan: 3.*
+            carbon: 3.*
+          - laravel: 13.*
+            testbench: 11.*
             phpstan: 2.*
             larastan: 3.*
             carbon: 3.*
