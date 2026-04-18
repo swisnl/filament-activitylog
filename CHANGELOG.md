@@ -6,6 +6,10 @@ All notable changes to `filament-activitylog` will be documented in this file.
 
 - Nothing
 
+## [3.0.0] - 2026-06-18
+
+- No changes from 3.0.0-alpha1
+
 ## [3.0.0-alpha1] - 2026-06-18
 
 - Support Filament 4 and 5

@@ -22,6 +22,7 @@ provides a way to add comments as activity log entries.
 
 | Plugin Version | Filament Version | PHP Version |
 |----------------|------------------|-------------|
+| 3.x            | 4.x or 5.x       | 8.3+        |
 | 2.x            | 4.x              | 8.2+        |
 | 1.x            | 3.x              | 8.2+        |
 
